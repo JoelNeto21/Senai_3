@@ -1,0 +1,136 @@
+<!-- GEMINI Help -->
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conversor de Temperatura</title>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #fafafa;
+        transition: background-color 0.5s ease;
+        color: #333;
+      }
+
+      main {
+        text-align: center;
+        width: 100%;
+        max-width: 300px;
+      }
+
+      h1 {
+        font-weight: 300;
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .field {
+        margin-bottom: 1.5rem;
+      }
+
+      input[type="number"] {
+        border: none;
+        border-bottom: 2px solid #ddd;
+        background: transparent;
+        font-size: 2rem;
+        padding: 5px;
+        width: 120px;
+        text-align: center;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+
+      input[type="number"]:focus {
+        border-color: #333;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+
+      button {
+        background: #333;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: opacity 0.2s;
+      }
+
+      button:hover {
+        opacity: 0.8;
+      }
+
+      button.secondary {
+        background: transparent;
+        color: #888;
+        padding: 10px;
+      }
+
+      #result {
+        margin-top: 2rem;
+        font-size: 1.5rem;
+        font-weight: 400;
+        min-height: 1.5em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Celsius para Fahrenheit</h1>
+
+      <div class="field">
+        <input type="number" id="C" placeholder="0" oninput="converter()" />
+        <span style="font-size: 1.2rem; color: #888;">°C</span>
+      </div>
+
+      <div id="result">-- °F</div>
+
+      <div class="controls">
+        <button class="secondary" onclick="limpar()">Limpar</button>
+      </div>
+    </main>
+
+    <script>
+      function converter() {
+        const inputC = document.getElementById("C");
+        const val = inputC.value;
+        const resultDisplay = document.getElementById("result");
+        
+        if (val === "") {
+          resultDisplay.textContent = "-- °F";
+          document.body.style.backgroundColor = "#fafafa";
+          return;
+        }
+
+        const C = parseFloat(val);
+        const F = (C * 1.8 + 32).toFixed(1);
+        resultDisplay.textContent = `${F} °F`;
+
+        if (F > 80) {
+          document.body.style.backgroundColor = "#f8b840";
+        } else {
+          document.body.style.backgroundColor = "#a1dafd";
+        }
+      }
+
+      function limpar() {
+        document.getElementById("C").value = "";
+        converter();
+      }
+    </script>
+  </body>
+</html>
