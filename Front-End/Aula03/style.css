@@ -1,0 +1,47 @@
+.nome1 {
+    background-color: aquamarine;
+    height: 600px;
+    width: 800px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.nome2 {
+    background-color: burlywood;
+    height: 180px;
+    width: 700px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nome3 {
+    background-color: chartreuse;
+    height: 180px;
+    width: 700px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nome4 {
+    background-color: cadetblue;
+    height: 180px;
+    width: 700px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nome5 {
+    background-color: coral;
+    height: 80px;
+    width: 90px;
+    border: 2px solid black;
+}

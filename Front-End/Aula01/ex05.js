@@ -1,7 +1,7 @@
 const prompt = require("prompt-sync")();
-const string = prompt("Digite os horários da Agenda (separados por vírgula ','): ");
-const agendaHorarios = string.split(',').map(Number);
-// const agendaHorarios = [8, 12, 25, 15, -2, 20];
+// const string = prompt("Digite os horários da Agenda (separados por vírgula ','): ");
+// const agendaHorarios = string.split(',').map(Number);
+const agendaHorarios = [8, 12, 25, 15, -2, 20];
 
 let contagemValidos = 0;
 let i = 1;
