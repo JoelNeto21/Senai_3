@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instagram</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        margin: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        /* place-items: center; */
+      }
+
+      .sidebar {
+        width: 100vw;
+        height: 50px;
+        border: 2px solid black;
+      }
+
+      .menu-x {
+        width: 50px;
+        height: 100vh;
+        border: 2px solid red;
+      }
+
+      .card-menu {
+        width: 50px;
+        height: 50px;
+        border: 2px solid blue;
+      }
+
+      .feed {
+        width: 50px;
+        height: 50px;
+        border: 2px solid green;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="item">
+        <div class="item-top">
+          <i data-lucide="instagram"></i>
+        </div>
+        <div class="item-center">
+          <i data-lucide="house"></i>
+          <i data-lucide="square-play"></i>
+          <i data-lucide="send"></i>
+          <i data-lucide="search"></i>
+          <i data-lucide="compass"></i>
+          <i data-lucide="heart"></i>
+          <i data-lucide="plus-square"></i>
+          <i data-lucide="bar-chart-3"></i>
+        </div>
+        <div class="item-bottom">
+          <i data-lucide="menu"></i>
+          <i data-lucide="layout-grid"></i>
+        </div>
+      </div>
+    </div>
+    <div class="menu-x">
+      <li>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul></ul>
+      </li>
+    </div>
+    <div class="card-menu">
+      <div class="account"></div>
+      <div class="sugest"></div>
+    </div>
+    <div class="feed">
+      <!-- Carrosel -->
+      <div class="card">
+        <img src="" />
+        <p></p>
+      </div>
+      <div class="card">
+        <!-- Video -->
+        <img src="" />
+        <p></p>
+      </div>
+      <div class="card">
+        <!-- Image -->
+        <img src="" />
+        <p></p>
+      </div>
+    </div>
+
+    <script>
+    //   lucide.createIcons();
+    </script>
+  </body>
+</html>

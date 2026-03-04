@@ -1,0 +1,61 @@
+
+/* >> Media Querys */
+@media screen and (min-width: 1201px) {
+  img {
+    height: auto;
+    width: 280px;
+    border-radius: 30px;
+  }
+
+  body {
+    background-color: #5d6989;
+  }
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1200px) {
+  img {
+    height: auto;
+    width: 260px;
+    border-top-right-radius: 70px;
+  }
+
+  body {
+    background-color: #e98348;
+  }
+}
+
+@media screen and (min-width: 801px) and (max-width: 1000px) {
+  img {
+    height: auto;
+    width: 240px;
+    border-bottom-right-radius: 70px;
+  }
+
+  body {
+    background-color: #6ebcad;
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 800px) {
+  img {
+    height: auto;
+    width: 220px;
+    border-top-left-radius: 70px;
+  }
+
+  body {
+    background-color: #f5c631;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  img {
+    height: auto;
+    width: 200px;
+    border-bottom-left-radius: 70px;
+  }
+
+  body {
+    background-color: #678c28;
+  }
+}
