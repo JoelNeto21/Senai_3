@@ -1,0 +1,27 @@
+h1 {
+  color: blue;
+}
+
+h2 {
+  color: green;
+}
+
+p {
+  color: black;
+}
+
+.p2 {
+  background-color: yellow;
+  font-weight: bold;
+}
+
+#p3 {
+  color: red;
+  text-decoration: underline;
+}
+
+/* 
+  EXPLICAÇÃO:
+    O seletor de ID (#), seguido pela Classe (.) e, por último, o Elemento (p, h2, h1).
+    Isso acontece porque a prioridade vai do mais específico para o mais abrangente. 
+*/
