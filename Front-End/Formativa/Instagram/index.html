@@ -1,101 +1,567 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Instagram</title>
+    <meta @user_="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="style.css" />
+    <title>Instagram Clone - Sidebar Pronta</title>
     <style>
+      /* --- Variáveis de Estilo --- */
+      :root {
+        --bg-color: #000000;
+        --border-color: #262626;
+        --text-primary: #f5f5f5;
+        --text-secondary: #a8a8a8;
+        --sidebar-width: 244px;
+        --sidebar-narrow-width: 72px;
+        --hover-overlay: rgba(255, 255, 255, 0.1);
+        --placeholder-bg: #1a1a1a;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        margin: auto;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        /* place-items: center; */
+        background-color: var(--bg-color);
+        color: var(--text-primary);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        font-size: 14px;
       }
 
-      .sidebar {
-        width: 100vw;
-        height: 50px;
-        border: 2px solid black;
+      /* --- Estrutura de Layout --- */
+      .container-app {
+        display: flex;
+        min-height: 100vh;
       }
 
-      .menu-x {
-        width: 50px;
+      /* Sidebar Principal */
+      .barra-lateral {
+        width: var(--sidebar-width);
         height: 100vh;
-        border: 2px solid red;
+        position: fixed;
+        top: 0;
+        left: 0;
+        border-right: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        padding: 8px 12px 20px;
+        z-index: 100;
+        background-color: var(--bg-color);
       }
 
-      .card-menu {
-        width: 50px;
+      .barra-lateral > .container-logo {
+        padding: 25px 12px 16px;
+        margin-bottom: 19px;
+        height: 73px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .barra-lateral .container-logo .logo-texto {
+        fill: var(--text-primary);
+        width: 103px;
+        display: block;
+      }
+
+      .barra-lateral .container-logo .logo-icone {
+        display: none;
+        width: 24px;
+        height: 24px;
+        fill: var(--text-primary);
+      }
+
+      .barra-lateral .links-navegacao {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        list-style: none;
+      }
+
+      .barra-lateral .item-navegacao {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+        cursor: pointer;
+        color: var(--text-primary);
+        text-decoration: none;
+      }
+
+      .barra-lateral .item-navegacao:hover {
+        background-color: var(--hover-overlay);
+      }
+
+      .barra-lateral .item-navegacao > svg {
+        width: 24px;
+        height: 24px;
+        margin-right: 16px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      .barra-lateral .item-navegacao > span {
+        font-size: 16px;
+      }
+
+      .barra-lateral .item-navegacao.ativo {
+        font-weight: 700;
+      }
+
+      .barra-lateral .item-navegacao > .foto-perfil {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        margin-right: 16px;
+        background-color: #f0f0f0;
+        object-fit: cover;
+      }
+
+      /* --- Conteúdo Central (Main) --- */
+      .conteudo-principal {
+        margin-left: var(--sidebar-width);
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        padding-top: 20px;
+      }
+
+      .container-feed {
+        max-width: 470px;
+        width: 100%;
+        margin-right: 64px;
+      }
+
+      .barra-sugestoes {
+        width: 319px;
+        margin-top: 20px;
+      }
+
+      /* --- Placeholders para Treino no Feed --- */
+      .secao-placeholder,
+      .secao-post,
+      .secao-storys {
+        /* border: 1px dashed #444; */
+        border-radius: 8px;
+        margin-bottom: 20px;
+      }
+
+      .secao-placeholder {
+        background: var(--placeholder-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-secondary);
+      }
+
+      .icon-filled {
+        fill: currentColor;
+        stroke-width: 0;
+      }
+
+      .secao-post {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px auto 45px;
+        overflow: hidden;
+        padding: 0px;
+      }
+
+      .secao-post > .post-name > img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .secao-post .post-name {
+        display: flex;
+        align-items: center;
+        color: white;
+        padding: 0 15px;
+        gap: 10px;
+      }
+
+      .post-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 8px;
+      }
+
+      .secao-storys {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .story-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+
+      .story-div {
+        height: 60px;
+        width: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background:
+          linear-gradient(#121212, #121212) padding-box,
+          linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)
+            border-box;
+        border: 3px solid transparent;
+      }
+
+      .story-card > p {
+        font-size: 12px;
+      }
+
+      .story-img {
         height: 50px;
-        border: 2px solid blue;
-      }
-
-      .feed {
         width: 50px;
-        height: 50px;
-        border: 2px solid green;
+        border-radius: 50%;
+        object-fit: cover;
       }
 
+      .post-info {
+        display: grid;
+        grid-template-columns: 5fr 1fr;
+        grid-template-rows: 1fr;
+      }
+
+      .post-info .icons-info {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        padding-left: 15px;
+        gap: 16px;
+      }
+
+      .post-info .icon-save {
+        display: flex;
+        align-items: center;
+        justify-content: right;
+        padding-right: 15px;
+      }
+
+      /* --- Responsividade --- */
+      @media (max-width: 1264px) {
+        .barra-lateral {
+          width: var(--sidebar-narrow-width);
+          align-items: center;
+        }
+        .barra-lateral .container-logo .logo-texto {
+          display: none;
+        }
+        .barra-lateral .container-logo .logo-icone {
+          display: block;
+        }
+        .barra-lateral .item-navegacao > span {
+          display: none;
+        }
+        .barra-lateral .item-navegacao > svg,
+        .barra-lateral .item-navegacao > .foto-perfil {
+          margin-right: 0;
+        }
+        .conteudo-principal {
+          margin-left: var(--sidebar-narrow-width);
+        }
+      }
+
+      @media (max-width: 1160px) {
+        .barra-sugestoes {
+          display: none;
+        }
+        .container-feed {
+          margin-right: 0;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .barra-lateral {
+          width: 100%;
+          height: 50px;
+          position: fixed;
+          bottom: 0;
+          top: auto;
+          flex-direction: row;
+          border-right: none;
+          border-top: 1px solid var(--border-color);
+          padding: 0;
+          justify-content: space-around;
+        }
+        .barra-lateral > .container-logo,
+        .barra-lateral .links-navegacao > .item-navegacao:nth-child(4),
+        .barra-lateral .links-navegacao > .item-navegacao:nth-child(6),
+        .barra-lateral .links-navegacao > .item-navegacao:nth-child(10),
+        .barra-lateral .links-navegacao > .item-navegacao:nth-child(11) {
+          display: none;
+        }
+        .barra-lateral .links-navegacao {
+          flex-direction: row;
+          width: 100%;
+          justify-content: space-around;
+        }
+        .conteudo-principal {
+          margin-left: 0;
+          padding-bottom: 60px;
+        }
+      }
     </style>
   </head>
   <body>
-    <div class="sidebar">
-      <div class="item">
-        <div class="item-top">
+    <div class="container-app">
+      <!-- SIDEBAR: Navegação Pronta -->
+      <nav class="barra-lateral">
+        <div class="container-logo">
+          <!-- Ícone do Instagram (visível em telas menores/tablet) -->
           <i data-lucide="instagram"></i>
+          <!-- Logo Texto Instagram (visível em desktop) -->
+          <svg class="logo-texto" viewBox="0 0 103 29">
+            <text
+              x="0"
+              y="22"
+              font-family="Arial"
+              font-size="22"
+              font-weight="bold"
+            >
+              Instagram
+            </text>
+          </svg>
         </div>
-        <div class="item-center">
-          <i data-lucide="house"></i>
-          <i data-lucide="square-play"></i>
-          <i data-lucide="send"></i>
-          <i data-lucide="search"></i>
-          <i data-lucide="compass"></i>
-          <i data-lucide="heart"></i>
-          <i data-lucide="plus-square"></i>
-          <i data-lucide="bar-chart-3"></i>
+
+        <div class="links-navegacao">
+          <a href="#" class="item-navegacao ativo">
+            <i data-lucide="house" class="icon-filled"></i>
+            <span>Página inicial</span>
+          </a>
+          <div class="item-navegacao">
+            <i data-lucide="square-play"></i>
+            <span>Reels</span>
+          </div>
+          <div class="item-navegacao">
+            <i data-lucide="send"></i>
+            <span>Mensagens</span>
+          </div>
+          <div class="item-navegacao">
+            <i data-lucide="search"></i>
+            <span>Pesquisa</span>
+          </div>
+          <div class="item-navegacao">
+            <i data-lucide="compass"></i>
+            <span>Explorar</span>
+          </div>
+          <div class="item-navegacao">
+            <i data-lucide="heart"></i>
+            <span>Notificações</span>
+          </div>
+          <div class="item-navegacao">
+            <i data-lucide="plus"></i>
+            <span>Criar</span>
+          </div>
+          <div class="item-navegacao">
+            <i data-lucide="bar-chart-3"></i>
+            <span>Painel</span>
+          </div>
+          <div class="item-navegacao">
+            <img
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Joel"
+              alt="Perfil"
+              class="foto-perfil"
+            />
+            <span>Perfil</span>
+          </div>
+          <div class="item-navegacao" style="margin-top: auto">
+            <svg viewBox="0 0 24 24">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span>Menu</span>
+          </div>
+          <div class="item-navegacao">
+            <i data-lucide="layout-grid"></i>
+            <span>Meta Apps</span>
+          </div>
         </div>
-        <div class="item-bottom">
-          <i data-lucide="menu"></i>
-          <i data-lucide="layout-grid"></i>
+      </nav>
+
+      <main class="conteudo-principal">
+        <div class="container-feed">
+          <!-- Stories Placeholder -->
+          <div class="secao-storys" style="height: 110px">
+            <div class="story-card">
+              <div class="story-div">
+                <img
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Malaman&backgroundColor=f0f0f0"
+                  alt="Perfil"
+                  class="story-img"
+                />
+              </div>
+              <p>@user_</p>
+            </div>
+
+            <div class="story-card">
+              <div class="story-div">
+                <img
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jeff&backgroundColor=f0f0f0"
+                  alt="Perfil"
+                  class="story-img"
+                />
+              </div>
+              <p>@user_</p>
+            </div>
+
+            <div class="story-card">
+              <div class="story-div">
+                <img
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Marques&backgroundColor=f0f0f0"
+                  alt="Perfil"
+                  class="story-img"
+                />
+              </div>
+              <p>@user_</p>
+            </div>
+
+            <div class="story-card">
+              <div class="story-div">
+                <img
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Hayron&backgroundColor=f0f0f0"
+                  alt="Perfil"
+                  class="story-img"
+                />
+              </div>
+              <p>@user_</p>
+            </div>
+
+            <div class="story-card">
+              <div class="story-div">
+                <img
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Douglas&backgroundColor=f0f0f0"
+                  alt="Perfil"
+                  class="story-img"
+                />
+              </div>
+              <p>@user_</p>
+            </div>
+
+            <div class="story-card">
+              <div class="story-div">
+                <img
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Samuel&backgroundColor=f0f0f0"
+                  alt="Perfil"
+                  class="story-img"
+                />
+              </div>
+              <p>@user_</p>
+            </div>
+
+            <div class="story-card">
+              <div class="story-div">
+                <img
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bruno&backgroundColor=f0f0f0"
+                  alt="Perfil"
+                  class="story-img"
+                />
+              </div>
+              <p>@user_</p>
+            </div>
+          </div>
+
+          <!-- Feed Placeholder -->
+          <div class="secao-post">
+            <div class="post-name">
+              <img
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jeff&backgroundColor=f0f0f0"
+                alt="Perfil"
+              />
+              <p>@user_</p>
+            </div>
+            <img
+              src="https://images.unsplash.com/photo-1772710101104-08706df3b84c?q=80&w=792&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              class="post-img"
+            />
+            <div class="post-info">
+              <div class="icons-info">
+                <i data-lucide="heart"></i>
+                <i data-lucide="message-circle"></i>
+                <i data-lucide="send"></i>
+              </div>
+              <div class="icon-save">
+                <i data-lucide="bookmark"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="secao-post">
+            <div class="post-name">
+              <img
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Malaman&backgroundColor=f0f0f0"
+                alt="Perfil"
+              />
+              <p>@user_</p>
+            </div>
+            <img
+              src="https://images.unsplash.com/photo-1694789827100-dccfe8b9ef87?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              class="post-img"
+            />
+            <div class="post-info">
+              <div class="icons-info">
+                <i data-lucide="heart"></i>
+                <i data-lucide="message-circle"></i>
+                <i data-lucide="send"></i>
+              </div>
+              <div class="icon-save">
+                <i data-lucide="bookmark"></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="secao-post">
+            <div class="post-name">
+              <img
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bruno&backgroundColor=f0f0f0"
+                alt="Perfil"
+              />
+              <p>@user_</p>
+            </div>
+            <img
+              src="https://images.unsplash.com/photo-1772365833453-5ff3aa328706?q=80&w=875&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              class="post-img">
+            <div class="post-info">
+              <div class="icons-info">
+                <i data-lucide="heart"></i>
+                <i data-lucide="message-circle"></i>
+                <i data-lucide="send"></i>
+              </div>
+              <div class="icon-save">
+                <i data-lucide="bookmark"></i>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="menu-x">
-      <li>
-        <ul></ul>
-        <ul></ul>
-        <ul></ul>
-        <ul></ul>
-        <ul></ul>
-      </li>
-    </div>
-    <div class="card-menu">
-      <div class="account"></div>
-      <div class="sugest"></div>
-    </div>
-    <div class="feed">
-      <!-- Carrosel -->
-      <div class="card">
-        <img src="" />
-        <p></p>
-      </div>
-      <div class="card">
-        <!-- Video -->
-        <img src="" />
-        <p></p>
-      </div>
-      <div class="card">
-        <!-- Image -->
-        <img src="" />
-        <p></p>
-      </div>
+
+        <!-- Sugestões Placeholder -->
+        <aside class="barra-sugestoes">
+          <div class="secao-placeholder" style="height: 400px">[Perfis]</div>
+        </aside>
+      </main>
     </div>
 
     <script>
-    //   lucide.createIcons();
+      lucide.createIcons();
     </script>
   </body>
 </html>
