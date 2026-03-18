@@ -2,324 +2,16 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta @user_="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"
+      onerror="
+        this.onerror = null;
+        this.src = './assets/vendor/lucide.min.js';
+      "
+    ></script>
     <title>Instagram Clone - Sidebar Pronta</title>
-    <style>
-      /* --- Variáveis de Estilo --- */
-      :root {
-        --bg-color: #000000;
-        --border-color: #262626;
-        --text-primary: #f5f5f5;
-        --text-secondary: #a8a8a8;
-        --sidebar-width: 244px;
-        --sidebar-narrow-width: 72px;
-        --hover-overlay: rgba(255, 255, 255, 0.1);
-        --placeholder-bg: #1a1a1a;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        background-color: var(--bg-color);
-        color: var(--text-primary);
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-          Arial, sans-serif;
-        font-size: 14px;
-      }
-
-      /* --- Estrutura de Layout --- */
-      .container-app {
-        display: flex;
-        min-height: 100vh;
-      }
-
-      /* Sidebar Principal */
-      .barra-lateral {
-        width: var(--sidebar-width);
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        border-right: 1px solid var(--border-color);
-        display: flex;
-        flex-direction: column;
-        padding: 8px 12px 20px;
-        z-index: 100;
-        background-color: var(--bg-color);
-      }
-
-      .barra-lateral > .container-logo {
-        padding: 25px 12px 16px;
-        margin-bottom: 19px;
-        height: 73px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-
-      .barra-lateral .container-logo .logo-texto {
-        fill: var(--text-primary);
-        width: 103px;
-        display: block;
-      }
-
-      .barra-lateral .container-logo .logo-icone {
-        display: none;
-        width: 24px;
-        height: 24px;
-        fill: var(--text-primary);
-      }
-
-      .barra-lateral .links-navegacao {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        list-style: none;
-      }
-
-      .barra-lateral .item-navegacao {
-        display: flex;
-        align-items: center;
-        padding: 12px;
-        border-radius: 8px;
-        transition: background-color 0.2s;
-        cursor: pointer;
-        color: var(--text-primary);
-        text-decoration: none;
-      }
-
-      .barra-lateral .item-navegacao:hover {
-        background-color: var(--hover-overlay);
-      }
-
-      .barra-lateral .item-navegacao > svg {
-        width: 24px;
-        height: 24px;
-        margin-right: 16px;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 2;
-      }
-
-      .barra-lateral .item-navegacao > span {
-        font-size: 16px;
-      }
-
-      .barra-lateral .item-navegacao.ativo {
-        font-weight: 700;
-      }
-
-      .barra-lateral .item-navegacao > .foto-perfil {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        margin-right: 16px;
-        background-color: #f0f0f0;
-        object-fit: cover;
-      }
-
-      /* --- Conteúdo Central (Main) --- */
-      .conteudo-principal {
-        margin-left: var(--sidebar-width);
-        flex-grow: 1;
-        display: flex;
-        justify-content: center;
-        padding-top: 20px;
-      }
-
-      .container-feed {
-        max-width: 470px;
-        width: 100%;
-        margin-right: 64px;
-      }
-
-      .barra-sugestoes {
-        width: 319px;
-        margin-top: 20px;
-      }
-
-      /* --- Placeholders para Treino no Feed --- */
-      .secao-placeholder,
-      .secao-post,
-      .secao-storys {
-        /* border: 1px dashed #444; */
-        border-radius: 8px;
-        margin-bottom: 20px;
-      }
-
-      .secao-placeholder {
-        background: var(--placeholder-bg);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-secondary);
-      }
-
-      .icon-filled {
-        fill: currentColor;
-        stroke-width: 0;
-      }
-
-      .secao-post {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 60px auto 45px;
-        overflow: hidden;
-        padding: 0px;
-      }
-
-      .secao-post > .post-name > img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-      }
-
-      .secao-post .post-name {
-        display: flex;
-        align-items: center;
-        color: white;
-        padding: 0 15px;
-        gap: 10px;
-      }
-
-      .post-img {
-        width: 100%;
-        height: auto;
-        display: block;
-        border-radius: 8px;
-      }
-
-      .secao-storys {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-      }
-
-      .story-card {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-      }
-
-      .story-div {
-        height: 60px;
-        width: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        background:
-          linear-gradient(#121212, #121212) padding-box,
-          linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)
-            border-box;
-        border: 3px solid transparent;
-      }
-
-      .story-card > p {
-        font-size: 12px;
-      }
-
-      .story-img {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-
-      .post-info {
-        display: grid;
-        grid-template-columns: 5fr 1fr;
-        grid-template-rows: 1fr;
-      }
-
-      .post-info .icons-info {
-        display: flex;
-        align-items: center;
-        justify-content: left;
-        padding-left: 15px;
-        gap: 16px;
-      }
-
-      .post-info .icon-save {
-        display: flex;
-        align-items: center;
-        justify-content: right;
-        padding-right: 15px;
-      }
-
-      /* --- Responsividade --- */
-      @media (max-width: 1264px) {
-        .barra-lateral {
-          width: var(--sidebar-narrow-width);
-          align-items: center;
-        }
-        .barra-lateral .container-logo .logo-texto {
-          display: none;
-        }
-        .barra-lateral .container-logo .logo-icone {
-          display: block;
-        }
-        .barra-lateral .item-navegacao > span {
-          display: none;
-        }
-        .barra-lateral .item-navegacao > svg,
-        .barra-lateral .item-navegacao > .foto-perfil {
-          margin-right: 0;
-        }
-        .conteudo-principal {
-          margin-left: var(--sidebar-narrow-width);
-        }
-      }
-
-      @media (max-width: 1160px) {
-        .barra-sugestoes {
-          display: none;
-        }
-        .container-feed {
-          margin-right: 0;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .barra-lateral {
-          width: 100%;
-          height: 50px;
-          position: fixed;
-          bottom: 0;
-          top: auto;
-          flex-direction: row;
-          border-right: none;
-          border-top: 1px solid var(--border-color);
-          padding: 0;
-          justify-content: space-around;
-        }
-        .barra-lateral > .container-logo,
-        .barra-lateral .links-navegacao > .item-navegacao:nth-child(4),
-        .barra-lateral .links-navegacao > .item-navegacao:nth-child(6),
-        .barra-lateral .links-navegacao > .item-navegacao:nth-child(10),
-        .barra-lateral .links-navegacao > .item-navegacao:nth-child(11) {
-          display: none;
-        }
-        .barra-lateral .links-navegacao {
-          flex-direction: row;
-          width: 100%;
-          justify-content: space-around;
-        }
-        .conteudo-principal {
-          margin-left: 0;
-          padding-bottom: 60px;
-        }
-      }
-    </style>
   </head>
   <body>
     <div class="container-app">
@@ -327,23 +19,11 @@
       <nav class="barra-lateral">
         <div class="container-logo">
           <!-- Ícone do Instagram (visível em telas menores/tablet) -->
-          <i data-lucide="instagram"></i>
-          <!-- Logo Texto Instagram (visível em desktop) -->
-          <svg class="logo-texto" viewBox="0 0 103 29">
-            <text
-              x="0"
-              y="22"
-              font-family="Arial"
-              font-size="22"
-              font-weight="bold"
-            >
-              Instagram
-            </text>
-          </svg>
+          <i data-lucide="instagram" class="logo-icone"></i>
         </div>
 
         <div class="links-navegacao">
-          <a href="#" class="item-navegacao ativo">
+          <a href="#" class="item-navegacao ativo item-primeiro">
             <i data-lucide="house" class="icon-filled"></i>
             <span>Página inicial</span>
           </a>
@@ -383,185 +63,816 @@
             />
             <span>Perfil</span>
           </div>
-          <div class="item-navegacao" style="margin-top: auto">
+          <button
+            type="button"
+            class="item-navegacao item-menu item-menu-toggle"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+            aria-controls="menuMaisPopup"
+          >
             <svg viewBox="0 0 24 24">
               <line x1="3" y1="12" x2="21" y2="12"></line>
               <line x1="3" y1="6" x2="21" y2="6"></line>
               <line x1="3" y1="18" x2="21" y2="18"></line>
             </svg>
             <span>Menu</span>
-          </div>
+          </button>
           <div class="item-navegacao">
             <i data-lucide="layout-grid"></i>
             <span>Meta Apps</span>
           </div>
         </div>
+
+        <div class="menu-mais-popup" id="menuMaisPopup" aria-hidden="true">
+          <div class="menu-mais-conteudo">
+            <div class="menu-mais-painel menu-mais-painel-principal">
+              <ul class="menu-mais-lista">
+                <li class="menu-mais-item">
+                  <button type="button" class="menu-mais-opcao">
+                    <span class="menu-mais-opcao-info">
+                      <i data-lucide="settings"></i>
+                      Configurações
+                    </span>
+                  </button>
+                </li>
+                <li class="menu-mais-item">
+                  <button type="button" class="menu-mais-opcao">
+                    <span class="menu-mais-opcao-info">
+                      <i data-lucide="activity"></i>
+                      Sua atividade
+                    </span>
+                  </button>
+                </li>
+                <li class="menu-mais-item">
+                  <button type="button" class="menu-mais-opcao">
+                    <span class="menu-mais-opcao-info">
+                      <i data-lucide="bookmark"></i>
+                      Salvos
+                    </span>
+                  </button>
+                </li>
+                <li class="menu-mais-item">
+                  <button
+                    type="button"
+                    class="menu-mais-opcao item-aparencia-toggle"
+                  >
+                    <span class="menu-mais-opcao-info">
+                      <i data-lucide="moon" class="icone-aparencia-menu"></i>
+                      Mudar aparência
+                    </span>
+                  </button>
+                </li>
+                <li class="menu-mais-item">
+                  <button type="button" class="menu-mais-opcao">
+                    <span class="menu-mais-opcao-info">
+                      <i data-lucide="message-square-warning"></i>
+                      Relatar um problema
+                    </span>
+                  </button>
+                </li>
+                <li class="menu-mais-separador" aria-hidden="true"></li>
+                <li class="menu-mais-item">
+                  <button type="button" class="menu-mais-opcao">
+                    <span class="menu-mais-opcao-info">Trocar de conta</span>
+                  </button>
+                </li>
+                <li class="menu-mais-separador" aria-hidden="true"></li>
+                <li class="menu-mais-item">
+                  <button type="button" class="menu-mais-opcao">
+                    <span class="menu-mais-opcao-info">Sair</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="menu-mais-painel menu-mais-painel-aparencia">
+              <div class="menu-aparencia-topo">
+                <button
+                  type="button"
+                  class="menu-aparencia-voltar"
+                  aria-label="Voltar"
+                >
+                  <i data-lucide="chevron-left"></i>
+                </button>
+                <p class="menu-aparencia-titulo">Mudar aparência</p>
+                <i
+                  data-lucide="moon"
+                  class="menu-aparencia-icone icone-aparencia-painel"
+                ></i>
+              </div>
+              <div class="menu-aparencia-opcao">
+                <span>Modo escuro</span>
+                <button
+                  type="button"
+                  class="menu-aparencia-switch ativo"
+                  id="menuAparenciaSwitch"
+                  aria-label="Alternar modo escuro"
+                  aria-pressed="true"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
       </nav>
 
+      <!-- CONTEUDO PRINCIPAL: feed + coluna de sugestoes -->
       <main class="conteudo-principal">
         <div class="container-feed">
           <!-- Stories Placeholder -->
           <div class="secao-storys" style="height: 110px">
-            <div class="story-card">
-              <div class="story-div">
-                <img
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Malaman&backgroundColor=f0f0f0"
-                  alt="Perfil"
-                  class="story-img"
-                />
-              </div>
-              <p>@user_</p>
-            </div>
+            <div class="storys-viewport">
+              <button
+                class="story-nav story-prev"
+                type="button"
+                aria-label="Stories anteriores"
+              >
+                <i data-lucide="chevron-left"></i>
+              </button>
+              <div class="storys-track">
+                <div
+                  class="story-card first-story"
+                  tabindex="0"
+                  aria-label="Abrir story de malaman"
+                >
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Malaman&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>malaman</p>
+                </div>
 
-            <div class="story-card">
-              <div class="story-div">
-                <img
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jeff&backgroundColor=f0f0f0"
-                  alt="Perfil"
-                  class="story-img"
-                />
-              </div>
-              <p>@user_</p>
-            </div>
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Rafael&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>rafael</p>
+                </div>
 
-            <div class="story-card">
-              <div class="story-div">
-                <img
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Marques&backgroundColor=f0f0f0"
-                  alt="Perfil"
-                  class="story-img"
-                />
-              </div>
-              <p>@user_</p>
-            </div>
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Marques&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>marques</p>
+                </div>
 
-            <div class="story-card">
-              <div class="story-div">
-                <img
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Hayron&backgroundColor=f0f0f0"
-                  alt="Perfil"
-                  class="story-img"
-                />
-              </div>
-              <p>@user_</p>
-            </div>
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Hayron&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>hayron</p>
+                </div>
 
-            <div class="story-card">
-              <div class="story-div">
-                <img
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Douglas&backgroundColor=f0f0f0"
-                  alt="Perfil"
-                  class="story-img"
-                />
-              </div>
-              <p>@user_</p>
-            </div>
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bianca&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>bianca</p>
+                </div>
 
-            <div class="story-card">
-              <div class="story-div">
-                <img
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Samuel&backgroundColor=f0f0f0"
-                  alt="Perfil"
-                  class="story-img"
-                />
-              </div>
-              <p>@user_</p>
-            </div>
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Samuel&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>samuel</p>
+                </div>
 
-            <div class="story-card">
-              <div class="story-div">
-                <img
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bruno&backgroundColor=f0f0f0"
-                  alt="Perfil"
-                  class="story-img"
-                />
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Thiago&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>thiago</p>
+                </div>
+
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Joel&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>joel</p>
+                </div>
+
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jeff&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>jeff</p>
+                </div>
+
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Amanda&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>amanda</p>
+                </div>
+
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Douglas&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>douglas</p>
+                </div>
+
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Carla&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>carla</p>
+                </div>
+
+                <div class="story-card">
+                  <div class="story-div">
+                    <img
+                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bruno&backgroundColor=f0f0f0"
+                      alt="Perfil"
+                      class="story-img"
+                    />
+                  </div>
+                  <p>bruno</p>
+                </div>
               </div>
-              <p>@user_</p>
+              <button
+                class="story-nav story-next"
+                type="button"
+                aria-label="Próximos stories"
+              >
+                <i data-lucide="chevron-right"></i>
+              </button>
             </div>
           </div>
 
           <!-- Feed Placeholder -->
           <div class="secao-post">
             <div class="post-name">
-              <img
-                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jeff&backgroundColor=f0f0f0"
-                alt="Perfil"
-              />
-              <p>@user_</p>
+              <div class="post-header-left">
+                <img
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jeff&backgroundColor=f0f0f0"
+                  alt="Perfil"
+                />
+                <div class="post-meta">
+                  <p class="post-user">jeff</p>
+                  <p class="post-time">• 18 min</p>
+                </div>
+              </div>
+              <div class="post-options">
+                <i data-lucide="ellipsis"></i>
+              </div>
             </div>
-            <img
-              src="https://images.unsplash.com/photo-1772710101104-08706df3b84c?q=80&w=792&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              class="post-img"
-            />
+            <div class="post-carousel" aria-label="Carrossel do post do jeff">
+              <button
+                class="post-carousel-nav post-carousel-prev"
+                type="button"
+                aria-label="Imagem anterior"
+              >
+                <i data-lucide="chevron-left"></i>
+              </button>
+              <div class="post-carousel-track">
+                <!-- https://images.unsplash.com/photo-1772710101104-08706df3b84c?q=80&w=792&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D -->
+                <img
+                  src="https://picsum.photos/seed/jeff-carrossel-1/1080/1080"
+                  class="post-img"
+                  alt="Post do jeff 1"
+                />
+                <!-- https://images.unsplash.com/photo-1772710101104-08706df3b84c?q=80&w=792&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D -->
+                <img
+                  src="https://picsum.photos/seed/jeff-carrossel-2/1080/1080"
+                  class="post-img"
+                  alt="Post do jeff 2"
+                />
+                <!-- https://images.unsplash.com/photo-1772710101104-08706df3b84c?q=80&w=792&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D -->
+                <img
+                  src="https://picsum.photos/seed/jeff-carrossel-3/1080/1080"
+                  class="post-img"
+                  alt="Post do jeff 3"
+                />
+                <!-- https://images.unsplash.com/photo-1772710101104-08706df3b84c?q=80&w=792&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D -->
+                <img
+                  src="https://picsum.photos/seed/jeff-carrossel-4/1080/1080"
+                  class="post-img"
+                  alt="Post do jeff 4"
+                />
+              </div>
+              <button
+                class="post-carousel-nav post-carousel-next"
+                type="button"
+                aria-label="Próxima imagem"
+              >
+                <i data-lucide="chevron-right"></i>
+              </button>
+            </div>
             <div class="post-info">
               <div class="icons-info">
-                <i data-lucide="heart"></i>
-                <i data-lucide="message-circle"></i>
+                <div class="post-action like-button">
+                  <i data-lucide="heart"></i>
+                  <span class="post-action-count like-count">248</span>
+                </div>
+                <div class="post-action">
+                  <i data-lucide="message-circle"></i>
+                  <span class="post-action-count">31</span>
+                </div>
                 <i data-lucide="send"></i>
               </div>
               <div class="icon-save">
                 <i data-lucide="bookmark"></i>
               </div>
+            </div>
+            <div class="post-caption">
+              <p class="post-caption-line">
+                <span class="post-caption-user">jeff</span>
+                tarde perfeita pra desacelerar e curtir o momento
+              </p>
+              <button class="caption-more" type="button">... ver mais</button>
+              <p class="caption-hashtags">#natureza #pordosol #vibes</p>
             </div>
           </div>
 
           <div class="secao-post">
             <div class="post-name">
-              <img
-                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Malaman&backgroundColor=f0f0f0"
-                alt="Perfil"
-              />
-              <p>@user_</p>
+              <div class="post-header-left">
+                <img
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bruno&backgroundColor=f0f0f0"
+                  alt="Perfil"
+                />
+                <div class="post-meta">
+                  <p class="post-user">bruno</p>
+                  <p class="post-time">• 3 h</p>
+                </div>
+              </div>
+              <div class="post-options">
+                <i data-lucide="ellipsis"></i>
+              </div>
             </div>
-            <img
-              src="https://images.unsplash.com/photo-1694789827100-dccfe8b9ef87?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              class="post-img"
-            />
+            <div class="post-video-wrapper">
+              <video
+                class="post-img"
+                src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+                autoplay
+                muted
+                loop
+                playsinline
+              ></video>
+              <button
+                class="video-volume-toggle"
+                type="button"
+                aria-label="Ativar som"
+              >
+                <i data-lucide="volume-off" class="icon-muted"></i>
+                <i data-lucide="volume-2" class="icon-unmuted"></i>
+              </button>
+            </div>
             <div class="post-info">
               <div class="icons-info">
-                <i data-lucide="heart"></i>
-                <i data-lucide="message-circle"></i>
+                <div class="post-action like-button">
+                  <i data-lucide="heart"></i>
+                  <span class="post-action-count like-count">189</span>
+                </div>
+                <div class="post-action">
+                  <i data-lucide="message-circle"></i>
+                  <span class="post-action-count">22</span>
+                </div>
                 <i data-lucide="send"></i>
               </div>
               <div class="icon-save">
                 <i data-lucide="bookmark"></i>
               </div>
+            </div>
+            <div class="post-caption">
+              <p class="post-caption-line">
+                <span class="post-caption-user">bruno</span>
+                essa luz no fim do dia deixou a foto incrível
+              </p>
+              <button class="caption-more" type="button">... ver mais</button>
+              <p class="caption-hashtags">#goldenhour #paisagem #instaphoto</p>
             </div>
           </div>
 
           <div class="secao-post">
             <div class="post-name">
-              <img
-                src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bruno&backgroundColor=f0f0f0"
-                alt="Perfil"
-              />
-              <p>@user_</p>
+              <div class="post-header-left">
+                <img
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Malaman&backgroundColor=f0f0f0"
+                  alt="Perfil"
+                />
+                <div class="post-meta">
+                  <p class="post-user">malaman</p>
+                  <p class="post-time">• 1 h</p>
+                </div>
+              </div>
+              <div class="post-options">
+                <i data-lucide="ellipsis"></i>
+              </div>
             </div>
+            <!-- https://images.unsplash.com/photo-1694789827100-dccfe8b9ef87?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D -->
             <img
-              src="https://images.unsplash.com/photo-1772365833453-5ff3aa328706?q=80&w=875&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              class="post-img">
+              src="https://picsum.photos/seed/malaman-post/920/1080"
+              class="post-img"
+            />
             <div class="post-info">
               <div class="icons-info">
-                <i data-lucide="heart"></i>
-                <i data-lucide="message-circle"></i>
+                <div class="post-action like-button">
+                  <i data-lucide="heart"></i>
+                  <span class="post-action-count like-count">512</span>
+                </div>
+                <div class="post-action">
+                  <i data-lucide="message-circle"></i>
+                  <span class="post-action-count">64</span>
+                </div>
                 <i data-lucide="send"></i>
               </div>
               <div class="icon-save">
                 <i data-lucide="bookmark"></i>
               </div>
+            </div>
+            <div class="post-caption">
+              <p class="post-caption-line">
+                <span class="post-caption-user">malaman</span>
+                registrando um cantinho novo que encontrei hoje
+              </p>
+              <button class="caption-more" type="button">... ver mais</button>
+              <p class="caption-hashtags">#explorar #fotografia #cidade</p>
             </div>
           </div>
         </div>
 
-        <!-- Sugestões Placeholder -->
+        <!-- Sugestões de Perfis -->
         <aside class="barra-sugestoes">
-          <div class="secao-placeholder" style="height: 400px">[Perfis]</div>
+          <div class="sugestoes-wrapper">
+            <div class="sugestoes-perfil">
+              <div class="sugestoes-perfil-info">
+                <img
+                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=Joel&backgroundColor=f0f0f0"
+                  alt="Perfil principal"
+                />
+                <div class="sugestoes-textos">
+                  <p class="sugestoes-user">joel_netoo_</p>
+                  <p class="sugestoes-nome">Joel Neto</p>
+                </div>
+              </div>
+              <button class="sugestoes-switch" type="button">Mudar</button>
+            </div>
+
+            <div class="sugestoes-cabecalho">
+              <p class="sugestoes-titulo">Sugestões para você</p>
+              <button class="sugestoes-ver-tudo" type="button">Ver tudo</button>
+            </div>
+
+            <ul class="sugestoes-lista">
+              <li class="sugestao-item">
+                <div class="sugestao-info">
+                  <img
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=MariaApar&backgroundColor=f0f0f0"
+                    alt="Maria Apar"
+                  />
+                  <div class="sugestao-textos">
+                    <p class="sugestao-user">Maria</p>
+                    <p class="sugestao-subinfo">
+                      <img
+                        src="https://api.dicebear.com/7.x/miniavs/svg?seed=ana"
+                        alt=""
+                      />Seguido por ana_caroline
+                    </p>
+                  </div>
+                </div>
+                <button class="sugestao-follow" type="button">Seguir</button>
+              </li>
+
+              <li class="sugestao-item">
+                <div class="sugestao-info">
+                  <img
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=WillianRoberto&backgroundColor=f0f0f0"
+                    alt="Willian Roberto"
+                  />
+                  <div class="sugestao-textos">
+                    <p class="sugestao-user">Willian Roberto</p>
+                    <p class="sugestao-subinfo">
+                      <img
+                        src="https://api.dicebear.com/7.x/miniavs/svg?seed=pyompeo"
+                        alt=""
+                      />Seguido por pyompeo
+                    </p>
+                  </div>
+                </div>
+                <button class="sugestao-follow" type="button">Seguir</button>
+              </li>
+
+              <li class="sugestao-item">
+                <div class="sugestao-info">
+                  <img
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=BeatrizDias&backgroundColor=f0f0f0"
+                    alt="Beatriz Dias"
+                  />
+                  <div class="sugestao-textos">
+                    <p class="sugestao-user">Beatriz</p>
+                    <p class="sugestao-subinfo">
+                      <img
+                        src="https://api.dicebear.com/7.x/miniavs/svg?seed=marlene"
+                        alt=""
+                      />Seguido por malaman
+                    </p>
+                  </div>
+                </div>
+                <button class="sugestao-follow" type="button">Seguir</button>
+              </li>
+
+              <li class="sugestao-item">
+                <div class="sugestao-info">
+                  <img
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sophit&backgroundColor=f0f0f0"
+                    alt="Sophit"
+                  />
+                  <div class="sugestao-textos">
+                    <p class="sugestao-user">Sophia</p>
+                    <p class="sugestao-subinfo">
+                      <img
+                        src="https://api.dicebear.com/7.x/miniavs/svg?seed=isabella"
+                        alt=""
+                      />Seguido por isabella
+                    </p>
+                  </div>
+                </div>
+                <button class="sugestao-follow" type="button">Seguir</button>
+              </li>
+
+              <li class="sugestao-item">
+                <div class="sugestao-info">
+                  <img
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=MonkeyIphones&backgroundColor=f0f0f0"
+                    alt="Monkey Iphones"
+                  />
+                  <div class="sugestao-textos">
+                    <p class="sugestao-user">Josué</p>
+                    <p class="sugestao-subinfo">Sugerido para você</p>
+                  </div>
+                </div>
+                <button class="sugestao-follow" type="button">Seguir</button>
+              </li>
+            </ul>
+
+            <div class="sugestoes-rodape">
+              <p class="sugestoes-links">
+                Sobre · Ajuda · Imprensa · API · Vagas · Privacidade · Termos ·
+                Localizações · Idioma · Verificação Meta
+              </p>
+              <p>© 2026 INSTAGRAM DA META</p>
+            </div>
+          </div>
         </aside>
       </main>
     </div>
 
-    <script>
-      lucide.createIcons();
-    </script>
+    <!-- WIDGET FIXO DE MENSAGENS (fora do fluxo do feed) -->
+    <div class="mensagens-fixa" aria-label="Mensagens">
+      <i data-lucide="send" class="mensagens-fixa-icone"></i>
+      <span class="mensagens-fixa-texto">Messages</span>
+      <div class="mensagens-fixa-avatares" aria-hidden="true">
+        <img src="https://api.dicebear.com/7.x/miniavs/svg?seed=ana" alt="" />
+        <img
+          src="https://api.dicebear.com/7.x/miniavs/svg?seed=pyompeo"
+          alt=""
+        />
+        <img
+          src="https://api.dicebear.com/7.x/miniavs/svg?seed=isabella"
+          alt=""
+        />
+      </div>
+    </div>
+
+    <!-- OVERLAY DE STORY (controlado pelo script.js) -->
+    <div
+      class="story-viewer-overlay"
+      id="storyViewerOverlay"
+      aria-hidden="true"
+    >
+      <div class="story-viewer-brand-floating" aria-hidden="true">
+        <!-- Instagram -->
+        <img
+          src="https://logos-marcas.com/wp-content/uploads/2020/04/Instagram-Logo.png"
+          alt="Instagram"
+        />
+      </div>
+      <button
+        class="story-viewer-close-floating"
+        id="storyViewerClose"
+        type="button"
+        aria-label="Fechar story"
+      >
+        <i data-lucide="x"></i>
+      </button>
+      <div
+        class="story-viewer-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Visualização de story"
+      >
+        <div class="story-viewer-progress"><span></span></div>
+        <div class="story-viewer-header">
+          <div class="story-viewer-user">
+            <img
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Malaman&backgroundColor=f0f0f0"
+              alt="malaman"
+            />
+            <div class="story-viewer-user-meta">
+              <span>malaman</span>
+              <span class="story-time">21h</span>
+            </div>
+          </div>
+          <div class="story-viewer-actions">
+            <button
+              class="story-viewer-btn play-pause-btn"
+              id="storyViewerPlayPause"
+              type="button"
+              aria-label="Pausar story"
+            >
+              <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true">
+                <rect
+                  x="6"
+                  y="4"
+                  width="5"
+                  height="16"
+                  rx="2.5"
+                  fill="currentColor"
+                ></rect>
+                <rect
+                  x="13"
+                  y="4"
+                  width="5"
+                  height="16"
+                  rx="2.5"
+                  fill="currentColor"
+                ></rect>
+              </svg>
+              <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 5v14l11-7z" fill="currentColor"></path>
+              </svg>
+            </button>
+            <button
+              class="story-viewer-btn"
+              type="button"
+              aria-label="Mais opções"
+            >
+              <i data-lucide="ellipsis"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="story-viewer-media">
+          <!-- https://images.unsplash.com/photo-1694789827100-dccfe8b9ef87?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D -->
+          <img
+            src="https://picsum.photos/seed/story-expandido-malman/1080/1920"
+            alt="Story expandido"
+          />
+          <div class="story-reaction-toast" id="storyReactionToast">
+            Enviado
+          </div>
+        </div>
+
+        <div class="story-viewer-footer">
+          <div class="story-viewer-quick-emojis" aria-hidden="true">
+            <p class="story-viewer-quick-title">Reações:</p>
+            <button
+              class="quick-emoji-btn"
+              type="button"
+              data-emoji="😂"
+              aria-label="Inserir emoji de risada"
+            >
+              <span>😂</span>
+            </button>
+            <button
+              class="quick-emoji-btn"
+              type="button"
+              data-emoji="😮"
+              aria-label="Inserir emoji surpreso"
+            >
+              <span>😮</span>
+            </button>
+            <button
+              class="quick-emoji-btn"
+              type="button"
+              data-emoji="😍"
+              aria-label="Inserir emoji apaixonado"
+            >
+              <span>😍</span>
+            </button>
+            <button
+              class="quick-emoji-btn"
+              type="button"
+              data-emoji="😢"
+              aria-label="Inserir emoji triste"
+            >
+              <span>😢</span>
+            </button>
+            <button
+              class="quick-emoji-btn"
+              type="button"
+              data-emoji="👏"
+              aria-label="Inserir emoji de aplausos"
+            >
+              <span>👏</span>
+            </button>
+            <button
+              class="quick-emoji-btn"
+              type="button"
+              data-emoji="🔥"
+              aria-label="Inserir emoji de fogo"
+            >
+              <span>🔥</span>
+            </button>
+            <button
+              class="quick-emoji-btn"
+              type="button"
+              data-emoji="🎉"
+              aria-label="Inserir emoji de festa"
+            >
+              <span>🎉</span>
+            </button>
+            <button
+              class="quick-emoji-btn"
+              type="button"
+              data-emoji="💯"
+              aria-label="Inserir emoji cem"
+            >
+              <span>💯</span>
+            </button>
+          </div>
+          <div class="story-viewer-reply-wrap">
+            <input
+              class="story-viewer-reply"
+              type="text"
+              placeholder="Responder a malaman..."
+            />
+            <button
+              class="story-viewer-send-text"
+              type="button"
+              aria-label="Enviar resposta"
+            >
+              Enviar
+            </button>
+          </div>
+          <button
+            class="story-viewer-btn story-viewer-like-btn"
+            id="storyViewerLikeButton"
+            type="button"
+            aria-label="Curtir"
+          >
+            <i data-lucide="heart"></i>
+          </button>
+          <button
+            class="story-viewer-btn story-viewer-share-btn"
+            type="button"
+            aria-label="Enviar"
+          >
+            <i data-lucide="send"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toda a logica de interacao foi extraida para script.js -->
+    <script src="script.js"></script>
   </body>
 </html>
