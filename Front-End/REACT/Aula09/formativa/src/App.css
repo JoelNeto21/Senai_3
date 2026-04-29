@@ -1,32 +1,21 @@
-/* Define variáveis de cor para representar cada prioridade. */
 :root {
-  /* Cor usada para tarefas de baixa prioridade. */
   --low: #28a745;
-  /* Cor usada para tarefas de prioridade média. */
   --medium: #ffc107;
-  /* Cor usada para tarefas de alta prioridade. */
   --high: #dc3545;
 }
 
-/* Estilo geral do container principal da aplicação. */
 .app-container {
-  /* Limita a largura para manter a leitura confortável. */
   max-width: 800px;
-  /* Centraliza o conteúdo na tela. */
   margin: 2rem auto;
-  /* Cria espaço lateral interno. */
   padding: 0 1rem;
-  /* Define uma fonte simples e legível. */
   font-family: system-ui, sans-serif;
 }
 
-/* Centraliza o cabeçalho e cria espaço abaixo dele. */
 header {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-/* Faz o formulário ficar organizado em linha. */
 .form-section form {
   display: flex;
   gap: 10px;
@@ -35,18 +24,15 @@ header {
   border-radius: 8px;
 }
 
-/* Faz o input ocupar mais espaço do que os outros campos. */
 .form-section input {
   flex: 3;
   padding: 10px;
 }
 
-/* Faz o seletor ocupar menos espaço que o input. */
 .form-section select {
   flex: 1;
 }
 
-/* Organiza os botões de filtro no centro da tela. */
 .filter-section {
   display: flex;
   justify-content: center;
@@ -54,20 +40,17 @@ header {
   margin: 20px 0;
 }
 
-/* Destaca visualmente o filtro ativo. */
 .filter-section button.active {
   background: #333;
   color: white;
 }
 
-/* Cria uma grade responsiva para os cartões de tarefas. */
 .task-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 15px;
 }
 
-/* Define o visual base de cada cartão. */
 .task-card {
   padding: 15px;
   border-radius: 8px;
@@ -79,34 +62,28 @@ header {
   justify-content: space-between;
 }
 
-/* Aplica a cor da borda para tarefas de baixa prioridade. */
 .task-card.baixa {
   border-color: var(--low);
 }
 
-/* Aplica a cor da borda para tarefas de prioridade média. */
 .task-card.média {
   border-color: var(--medium);
 }
 
-/* Aplica a cor da borda para tarefas de alta prioridade. */
 .task-card.alta {
   border-color: var(--high);
 }
 
-/* Deixa a tarefa concluída com aparência mais apagada. */
 .task-card.done {
   opacity: 0.6;
   background: #e9ecef;
 }
 
-/* Ajusta o título da tarefa para não ficar muito espaçado. */
 .task-content h3 {
   margin: 0 0 10px 0;
   font-size: 1.1rem;
 }
 
-/* Alinha o input de edição com o botão X na mesma linha. */
 .edit-row {
   display: flex;
   gap: 8px;
@@ -114,13 +91,11 @@ header {
   margin-bottom: 10px;
 }
 
-/* Faz o input ocupar o espaço disponível ao editar. */
 .edit-row input {
   flex: 1;
   padding: 8px;
 }
 
-/* Deixa o botão X compacto. */
 .edit-row .edit-cancel {
   width: 36px;
   padding: 8px 0;
@@ -128,36 +103,30 @@ header {
   color: white;
 }
 
-/* Faz a prioridade aparecer em bloco separado e com destaque. */
 .task-content span {
   display: block;
   font-size: 0.8rem;
   font-weight: bold;
 }
 
-/* Organiza os botões de ação no rodapé do cartão. */
 .task-actions {
   margin-top: 15px;
   display: flex;
   justify-content: space-between;
 }
 
-/* Dá uma cor de alerta ao botão de remover. */
 .task-actions button.delete {
   background: #ff4d4d;
 }
 
-/* Dá uma cor ao botão de edit. */
 .task-actions button.edit {
   background: #4dbeff;
 }
 
-/* Dá uma cor ao botão de conclusão. */
 .task-actions button.done {
   background: #43ee33;
 }
 
-/* Overlay escuro do modal de confirmação. */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -169,7 +138,6 @@ header {
   z-index: 1000;
 }
 
-/* Caixa central do modal. */
 .modal-box {
   width: 100%;
   max-width: 420px;
@@ -179,31 +147,26 @@ header {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
 }
 
-/* Título do modal. */
 .modal-box h2 {
   margin: 0 0 12px;
 }
 
-/* Espaço do texto do modal. */
 .modal-box p {
   margin: 0 0 20px;
   line-height: 1.5;
 }
 
-/* Alinha os botões do modal. */
 .modal-actions {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
 }
 
-/* Estilo do botão cancelar do modal. */
 .modal-actions .modal-cancel {
   background: #6c757d77;
   color: #fff;
 }
 
-/* Estilo do botão de excluir do modal. */
 .modal-actions .modal-delete {
   background: #dc3545;
   color: #fff;
