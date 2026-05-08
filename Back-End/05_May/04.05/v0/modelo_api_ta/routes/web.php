@@ -5,15 +5,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Http\Controllers\PokemonController;
 
-Route::get('/pokemon-local/novo', [PokemonController::class, 'createLocal'])->name('pokemon-local.create');
-Route::post('/pokemon-local/salvar', [PokemonController::class, 'storeLocal'])->name('pokemon-local.store');
-Route::put('/pokemon-local/{pokemonLocal}', [PokemonController::class, 'updateLocal'])->name('pokemon-local.update');
-Route::delete('/pokemon-local/{pokemonLocal}', [PokemonController::class, 'destroyLocal'])->name('pokemon-local.destroy');
-
 // Adicione o ->name('pokemon.index') na rota que lista os Pokémons
-Route::get('/tcgdex', [PokemonController::class, 'index'])->name('pokemon.index');
-
-Route::get('/pokedex', [PokemonController::class, 'pokedex'])->name('pokedex.index');
+Route::get('/pokemon', [PokemonController::class, 'index'])->name('pokemon.index');
 
 // (E logo abaixo deve estar a rota de busca que você consertou antes)
 Route::get('/pokemon/search', [PokemonController::class, 'search'])->name('pokemon.search');
@@ -33,9 +26,8 @@ Route::get('/pokemon/{name}', function ($name) {
                 'foto' => $dados['sprites']['front_default']
             ]
         ], 200);
-    }
-
-    return response()->json(['erro' => 'Pokemon não encontrado'], 404);
+        return response()->json(['erro' => 'Pokemon não encontrado'], 404);
+    };
 });
 
 Route::get('/user/{firstName}', function ($firstName) {
@@ -67,7 +59,7 @@ Route::post('/pokemon/novo', function (Request $request) {
     ]);
 
     return response()->json([
-        'mensagem' => 'Pokemon cadastrado com sucesso!',
+        'memsagem' => 'Pokemon cadastrado com sucesso!',
         'id_gerado' => rand(1000, 9999),
         'dados_recebidos' => $dados
     ], 201);

@@ -610,65 +610,6 @@
             box-shadow: 0 0 15px rgba(255,215,0,0.4);
         }
 
-        .action-btn.variant-active {
-            background: rgba(var(--type-color-rgb), 0.25);
-            border-color: var(--type-color);
-            box-shadow: 0 0 15px var(--glow-color);
-        }
-
-        /* Variações container */
-        .variations-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
-            max-width: 600px;
-        }
-
-        .variations-label {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 9px;
-            color: rgba(255,255,255,0.4);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            align-self: center;
-            width: 100%;
-            text-align: center;
-            margin-bottom: 4px;
-        }
-
-        .variant-btn {
-            font-family: 'Orbitron', monospace;
-            font-size: 9px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            border: 1px solid rgba(var(--type-color-rgb), 0.3);
-            background: rgba(var(--type-color-rgb), 0.05);
-            color: rgba(255,255,255,0.6);
-            padding: 8px 14px;
-            border-radius: 2px;
-            cursor: pointer;
-            transition: all 0.2s;
-            clip-path: polygon(4px 0%, 100% 0%, calc(100% - 4px) 100%, 0% 100%);
-            backdrop-filter: blur(10px);
-            white-space: nowrap;
-        }
-
-        .variant-btn:hover {
-            color: var(--type-color);
-            background: rgba(var(--type-color-rgb), 0.15);
-            border-color: rgba(var(--type-color-rgb), 0.6);
-            transform: translateY(-1px);
-        }
-
-        .variant-btn.active {
-            background: rgba(var(--type-color-rgb), 0.25);
-            border-color: var(--type-color);
-            color: var(--type-color);
-            box-shadow: 0 0 12px var(--glow-color);
-        }
-
-
         /* Scanline animado do título */
         @keyframes scan-line {
             0%   { top: -10%; }
@@ -706,12 +647,6 @@
             background: rgba(var(--type-color-rgb), 0.15);
             border: 1px solid rgba(var(--type-color-rgb), 0.4);
             color: var(--type-color);
-        }
-
-        .type-tag-secondary {
-            background: rgba(var(--secondary-type-color-rgb, var(--type-color-rgb)), 0.15);
-            border-color: rgba(var(--secondary-type-color-rgb, var(--type-color-rgb)), 0.4);
-            color: var(--secondary-type-color, var(--type-color));
         }
 
         /* Indicador de tipo na página */
@@ -794,8 +729,6 @@
     $secondaryType   = $pokemon['types'][1]['type']['name'] ?? null;
     $primaryColor    = $typeColors[$primaryType]['hex'] ?? '#A8A77A';
     $primaryColorRgb = $typeColors[$primaryType]['rgb'] ?? '168, 167, 122';
-    $secondaryColor = $secondaryType ? ($typeColors[$secondaryType]['hex'] ?? '#A8A77A') : '#A8A77A';
-    $secondaryColorRgb = $secondaryType ? ($typeColors[$secondaryType]['rgb'] ?? '168, 167, 122') : '168, 167, 122';
 
     $name   = ucfirst($pokemon['name'] ?? 'Missingno');
     $id     = str_pad($pokemon['id'] ?? 0, 3, '0', STR_PAD_LEFT);
@@ -850,10 +783,7 @@
                 <span class="type-indicator"></span>
                 <span class="type-tag">{{ strtoupper($primaryType) }}</span>
                 @if($secondaryType)
-                    <span
-                        class="type-tag type-tag-secondary"
-                        style="--secondary-type-color-rgb: {{ $secondaryColorRgb }}; --secondary-type-color: {{ $secondaryColor }};"
-                    >{{ strtoupper($secondaryType) }}</span>
+                    <span class="type-tag" style="background: rgba({{ $typeColors[$secondaryType]['rgb'] ?? '168,167,122' }}, 0.15); border-color: rgba({{ $typeColors[$secondaryType]['rgb'] ?? '168,167,122' }}, 0.4); color: {{ $typeColors[$secondaryType]['hex'] ?? '#A8A77A' }};">{{ strtoupper($secondaryType) }}</span>
                 @endif
             </div>
         </div>
@@ -1011,36 +941,13 @@
         </div><!-- /card-container -->
 
         <!-- ── BOTÕES ── -->
-        <div class="flex flex-col gap-4 justify-center ui-panel" style="width: 100%; max-width: 600px;">
-            
-            <!-- Variações (se existirem) -->
-            @if(!empty($pokemon['variations'] ?? []))
-                <div class="variations-container">
-                    <div class="variations-label">VARIAÇÕES DISPONÍVEIS</div>
-                    @foreach($pokemon['variations'] as $variation)
-                        <button 
-                            type="button"
-                            class="variant-btn"
-                            data-variant="{{ $variation['key'] }}"
-                            data-image="{{ $variation['image'] }}"
-                            data-image-shiny="{{ $variation['image_shiny'] }}"
-                            title="{{ $variation['label'] }}"
-                        >
-                            {{ $variation['label'] }}
-                        </button>
-                    @endforeach
-                </div>
-            @endif
-
-            <!-- Botões principais -->
-            <div class="flex gap-4 flex-wrap justify-center">
-                <button id="shinyToggle" class="action-btn">
-                    ✨ MODO SHINY
-                </button>
-                <a href="{{ route('pokemon.index') }}" class="action-btn" style="text-decoration: none; display: inline-flex; align-items: center;">
-                    ⟳ ALEATÓRIO
-                </a>
-            </div>
+        <div class="flex gap-4 flex-wrap justify-center ui-panel">
+            <button id="shinyToggle" class="action-btn">
+                ✨ MODO SHINY
+            </button>
+            <a href="{{ route('pokemon.index') }}" class="action-btn" style="text-decoration: none; display: inline-flex; align-items: center;">
+                ⟳ ALEATÓRIO
+            </a>
         </div>
 
         <!-- Footer info -->
@@ -1100,7 +1007,6 @@
     const shinyBtn = document.getElementById('shinyToggle');
     const pokeImg  = document.getElementById('pokeImage');
     let isShiny = false;
-    let currentVariant = 'default';
 
     shinyBtn.addEventListener('click', () => {
         isShiny = !isShiny;
@@ -1114,11 +1020,7 @@
         if (isShiny) {
             pokeImg.style.opacity = '0';
             setTimeout(() => {
-                if (currentVariant === 'default') {
-                    pokeImg.src = pokeImg.dataset.shiny;
-                } else {
-                    pokeImg.src = pokeImg.dataset.shinyVariant;
-                }
+                pokeImg.src = pokeImg.dataset.shiny;
                 pokeImg.style.opacity = '1';
             }, 200);
             shinyBtn.textContent = '⬅ MODO NORMAL';
@@ -1126,57 +1028,12 @@
         } else {
             pokeImg.style.opacity = '0';
             setTimeout(() => {
-                if (currentVariant === 'default') {
-                    pokeImg.src = pokeImg.dataset.default;
-                } else {
-                    pokeImg.src = pokeImg.dataset.variantImage;
-                }
+                pokeImg.src = pokeImg.dataset.default;
                 pokeImg.style.opacity = '1';
             }, 200);
             shinyBtn.textContent = '✨ MODO SHINY';
             shinyBtn.classList.remove('shiny-active');
         }
-    });
-
-    // ── VARIAÇÕES ──
-    const variantBtns = document.querySelectorAll('.variant-btn');
-    
-    variantBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const variant = btn.dataset.variant;
-            const img = btn.dataset.image;
-            const imgShiny = btn.dataset.imageShiny;
-
-            // Remove active class de todos os botões
-            variantBtns.forEach(b => b.classList.remove('active'));
-            
-            // Adiciona active class ao botão clicado
-            btn.classList.add('active');
-
-            // Atualiza a variável de estado
-            currentVariant = variant;
-
-            // Atualiza os data attributes da imagem
-            pokeImg.dataset.variantImage = img;
-            pokeImg.dataset.shinyVariant = imgShiny;
-
-            // Burst effect
-            const burst = document.createElement('div');
-            burst.className = 'shiny-burst';
-            card.appendChild(burst);
-            setTimeout(() => burst.remove(), 700);
-
-            // Atualiza a imagem com transição
-            pokeImg.style.opacity = '0';
-            setTimeout(() => {
-                if (isShiny) {
-                    pokeImg.src = imgShiny;
-                } else {
-                    pokeImg.src = img;
-                }
-                pokeImg.style.opacity = '1';
-            }, 200);
-        });
     });
 
     pokeImg.style.transition = 'opacity 0.3s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease';
