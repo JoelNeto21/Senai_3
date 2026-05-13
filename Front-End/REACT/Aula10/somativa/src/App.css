@@ -1,0 +1,654 @@
+/* ========== DESIGN APPLE-INSPIRED - PALETA DE CORES ========== */
+:root {
+  /* Cores Primárias - Paleta minimalista e sofisticada */
+  --palestra: #007AFF;      /* Azul Apple */
+  --workshop: #FF9500;      /* Laranja Apple */
+  --painel: #34C759;        /* Verde Apple */
+  
+  /* Cores Neutras - Design minimalista */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F7;
+  --text-primary: #1D1D1D;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  --border-color: #E5E5EA;
+  --accent-blue: #007AFF;
+  
+  /* Espaçamento Apple-inspired */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  
+  /* Sombras sutis Apple */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 40px rgba(0, 0, 0, 0.14);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-primary);
+}
+
+.app-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) var(--spacing-md);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  min-height: 100vh;
+}
+
+/* ========== HEADER - DESIGN MINIMALISTA APPLE ========== */
+header {
+  text-align: center;
+  margin-bottom: var(--spacing-xxl);
+  padding: var(--spacing-xxl) var(--spacing-lg);
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+header:hover {
+  box-shadow: var(--shadow-md);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+header p {
+  color: var(--text-secondary);
+  margin-top: var(--spacing-sm);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.btn-limpar-cronograma {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--bg-primary);
+  color: #FF3B30;
+  border: 1px solid #FF3B30;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.btn-limpar-cronograma:hover {
+  background: rgba(255, 59, 48, 0.1);
+  transform: scale(1.02);
+}
+
+.btn-limpar-cronograma:active {
+  transform: scale(0.98);
+}
+
+/* ========== FORMULÁRIO - DESIGN APPLE ========== */
+.form-section form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  background: var(--bg-secondary);
+  padding: var(--spacing-lg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-section input,
+.form-section select {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.form-section input {
+  flex: 2;
+  min-width: 150px;
+}
+
+.form-section select {
+  flex: 1;
+  min-width: 120px;
+}
+
+.form-section input:focus,
+.form-section select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.form-section input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.form-section button {
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  min-width: 120px;
+}
+
+.form-section button:hover {
+  background: #0A84FF;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.form-section button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ========== BARRA DE PESQUISA - DESIGN APPLE ========== */
+.search-section {
+  margin: var(--spacing-lg) 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 600px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  padding-right: 44px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 1rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.search-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  background: var(--bg-primary);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.search-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+/* ========== BOTÕES DE FILTRO - DESIGN APPLE ========== */
+.filter-section {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin: var(--spacing-xxl) 0;
+  flex-wrap: wrap;
+}
+
+.filter-section button {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+
+.filter-section button:hover {
+  background: var(--bg-primary);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+.filter-section button.active {
+  background: var(--accent-blue);
+  color: white;
+  border-color: var(--accent-blue);
+  box-shadow: var(--shadow-md);
+}
+
+/* ========== GRID DE EVENTOS - DESIGN APPLE ========== */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xxl);
+}
+
+/* ========== CARDS DE EVENTOS - DESIGN MINIMALISTA APPLE ========== */
+.event-card {
+  padding: var(--spacing-lg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  transition: all 0.3s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: #D0D0D4;
+}
+
+.event-card.palestra {
+  border-left: 4px solid var(--palestra);
+}
+
+.event-card.workshop {
+  border-left: 4px solid var(--workshop);
+}
+
+.event-card.painel {
+  border-left: 4px solid var(--painel);
+}
+
+.event-card.em-andamento {
+  background: linear-gradient(135deg, rgba(52, 199, 89, 0.05) 0%, rgba(52, 199, 89, 0.02) 100%);
+  animation: subtle-pulse 2s infinite;
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { box-shadow: var(--shadow-sm); }
+  50% { box-shadow: var(--shadow-md); }
+}
+
+.event-card.encerrado {
+  opacity: 0.7;
+  background: var(--bg-secondary);
+}
+
+/* Conteúdo do card */
+.event-content h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.event-tag,
+.status-badge,
+.vagas-info {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.event-tag {
+  color: var(--text-secondary);
+}
+
+.status-badge {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.vagas-info {
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+small {
+  color: var(--text-tertiary);
+  display: block;
+  margin-top: var(--spacing-md);
+  font-size: 0.8rem;
+}
+
+/* ========== BOTÕES DO CARD - DESIGN APPLE ========== */
+.event-actions {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.event-actions button {
+  flex: 1;
+  padding: var(--spacing-md);
+  font-size: 0.85rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.event-actions button.status-btn {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.event-actions button.status-btn:hover {
+  background: var(--bg-primary);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  box-shadow: var(--shadow-sm);
+}
+
+.event-actions button.inscricao-btn {
+  background: #34C759;
+  color: white;
+  border-color: #34C759;
+}
+
+.event-actions button.inscricao-btn:hover:not(:disabled) {
+  background: #30B74A;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.event-actions button.inscricao-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.event-actions button.inscricao-btn.esgotado {
+  background: var(--text-tertiary);
+  border-color: var(--text-tertiary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.event-actions button.delete {
+  background: transparent;
+  color: #FF3B30;
+  border-color: #FF3B30;
+}
+
+.event-actions button.delete:hover {
+  background: rgba(255, 59, 48, 0.1);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.event-actions button.delete:active {
+  transform: translateY(0);
+}
+
+.no-events {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--spacing-xxl) var(--spacing-lg);
+  color: var(--text-tertiary);
+  font-size: 1.1rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  width: 100%;
+}
+
+/* ========== BOTÃO FAB (FLOATING ACTION BUTTON) - APPLE DESIGN ========== */
+.fab-info-button {
+  position: fixed;
+  bottom: var(--spacing-xl);
+  right: var(--spacing-xl);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.fab-info-button:hover {
+  transform: scale(1.08);
+  box-shadow: var(--shadow-xl);
+}
+
+.fab-info-button:active {
+  transform: scale(0.96);
+}
+
+/* ========== MODAL - DESIGN MINIMALISTA APPLE ========== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: fade-in 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: var(--bg-primary);
+  border-radius: 16px;
+  padding: var(--spacing-xxl);
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  animation: slide-up 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: all 0.2s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  transform: scale(1.1);
+}
+
+.modal-content h2 {
+  color: var(--text-primary);
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.modal-alteracoes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.alteracao-item {
+  padding: var(--spacing-lg);
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--accent-blue);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.alteracao-item:hover {
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-sm);
+  transform: translateX(4px);
+}
+
+.alteracao-item h3 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--accent-blue);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.alteracao-item p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* ========== SCROLL BAR CUSTOMIZADO - APPLE STYLE ========== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D0D0D4;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999999;
+}
+
+/* ========== RESPONSIVIDADE - MOBILE APPLE STYLE ========== */
+@media (max-width: 768px) {
+  .app-container {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  
+  header {
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  .form-section form {
+    flex-direction: column;
+  }
+  
+  .form-section input,
+  .form-section select {
+    min-width: unset;
+  }
+  
+  .form-section button {
+    width: 100%;
+  }
+  
+  .event-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .filter-section {
+    gap: var(--spacing-sm);
+  }
+  
+  .modal-content {
+    padding: var(--spacing-lg);
+    width: 95%;
+  }
+  
+  .fab-info-button {
+    width: 48px;
+    height: 48px;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+    font-size: 1.1rem;
+  }
+}

@@ -1,0 +1,575 @@
+/* ========== PALETA DE CORES APPLE-INSPIRED ========== */
+:root {
+  /* Cores Primárias - Paleta minimalista e sofisticada */
+  --palestra: #007AFF;      /* Azul Apple */
+  --workshop: #FF9500;      /* Laranja Apple */
+  --painel: #34C759;        /* Verde Apple */
+  
+  /* Cores Neutras - Design minimalista */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F5F5F7;  /* Fundo cinza Apple */
+  --text-primary: #1D1D1D;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  --border-color: #E5E5EA;
+  
+  /* Cores de Status */
+  --bg-encerrado: #F5F5F7;
+  --accent-blue: #007AFF;
+  HEADER - DESIGN MINIMALISTA APPLE ========== */
+/* Substitui o gradiente por um design clean com subtle background */
+header {
+  text-align: center;
+  margin-bottom: var(--spacing-xxl);
+  padding: var(--spacing-xxl) var(--spacing-lg);
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+header:hover {
+  box-shadow: var(--shadow-md);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-shadow: none;
+}
+
+header p {
+  color: var(--text-secondary);
+  margin-top: var(--spacing-sm);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: -0.01h;
+}
+
+/* ========== ALTERAÇÃO 1: GRADIENTE NO HEADER ========== */
+/* Este gradiente linear azul-roxo moderno substitui a cor sólida do header */
+header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  /* ALTERAÇÃO 1: Aplicamos um gradiente linear de azul (#0284c7) para roxo (#7c3aed) */
+  background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(114, 58, 237, 0.3);
+  color: white;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}- design Apple */
+.btn-limpar-cronograma {
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--bg-primary);
+  color: #FF3B30;
+  border: 1px solid #FF3B30;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  letter-spacing: -0.01em;
+}
+
+.btn-limpar-cronograma:hover {
+  background: rgba(255, 59, 48, 0.1);
+  transform: scale(1.02);
+/* ========== FORMULÁRIO - DESIGN APPLE ========== */
+.form-section form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  background: var(--bg-secondary);
+  padding: var(--spacing-lg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-section input,
+.form-section select {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.form-section input {
+  flex: 2;
+  min-width: 150px;
+}
+
+.form-section select {
+  flex: 1;
+  min-width: 120px;
+}
+
+.form-section input:focus,
+.form-section select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+}
+
+.form-section input::placeholder {
+  color: var(--text-tertiary);
+}BARRA DE PESQUISA - DESIGN APPLE ========== */
+.search-section {
+  margin: var(--spacing-lg) 0;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 600px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 1rem;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.search-input::placeholder {
+  color: var(--text-tertiary);
+/* ========== BOTÕES DE FILTRO - DESIGN APPLE ========== */
+.filter-section {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin: var(--spacing-xxl) 0;
+  flex-wrap: wrap;
+}
+
+.filter-section button {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+
+.filter-section button:hover {
+  background: var(--bg-primary);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+/* ========== GRID DE EVENTOS - DESIGN APPLE ========== */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xxl)lor: var(--accent-blue);
+  box-shadow: CARDS DE EVENTOS - DESIGN MINIMALISTA APPLE ========== */
+.event-card {
+  padding: var(--spacing-lg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  transition: all 0.3s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: #D0D0D4;
+}
+
+/* Borda colorida sutil por tipo */
+.event-card.palestra {
+  border-left: 4px solid var(--palestra);
+}
+
+.event-card.workshop {
+  border-left: 4px solid var(--workshop);
+}
+
+.event-card.painel {
+  border-left: 4px solid var(--painel);
+}
+
+/* Status "Em Andamento" - fundo sutil */
+.event-card.em-andamento {
+  background: linear-gradient(135deg, rgba(52, 199, 89, 0.05) 0%, rgba(52, 199, 89, 0.02) 100%);
+  animation: subtle-pulse 2s infinite;
+}
+
+@keyframes subtle-pulse {
+  0%, 100% { box-shadow: var(--shadow-sm); }
+  50% { box-shadow: var(--shadow-md); }
+}
+
+/* Status "Encerrado" - tons neutros */
+.event-card.encerrado {
+  opacity: 0.7;
+  background: var(--bg-secondary);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* ========== ALTERAÇÃO 2: EFEITO DE SOMBRA ELEVADA E HOVER NOS CARDS ========== */
+/* Os cards agora possuem uma sombra mais pronunciada e efeito de elevação no hover */
+.event-card {
+/* Conteúdo do card - tipografia Apple */
+.event-content h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.event-tag,
+.status-badge,
+.vagas-info {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.event-tag {
+  color: var(--text-secondary);
+}
+
+.status-badge {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.vagas-info {
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+small {
+  color: var(--text-tertiary);
+/* ========== BOTÕES DO CARD - DESIGN APPLE ========== */
+.event-actions {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.event-actions button {
+  flex: 1;
+  padding: var(--spacing-md);
+  font-size: 0.85rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Botão de status (Iniciar/Encerrar) */
+.event-actions button.status-btn {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.event-actions button.status-btn:hover {
+  background: var(--bg-primary);
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Botão de inscrição */
+.event-actions button.inscricao-btn {
+  background: #34C759;
+  color: white;
+  border-color: #34C759;
+}
+
+.event-actions button.inscricao-btn:hover:not(:disabled) {
+  background: #30B74A;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.event-actions button.inscricao-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Botão esgotado */
+.event-actions button.inscricao-btn.esgotado {
+  background: var(--text-tertiary);
+  border-color: var(--text-tertiary);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Botão de deletar */
+.event-actions button.delete {
+  background: transparent;
+  color: #FF3B30;
+  border-color: #FF3B30;
+}
+
+.event-actions button.delete:hover {
+  background: rgba(255, 59, 48, 0.1);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.event-actions button.delete:active {
+  transform: translateY(0
+}
+
+.event-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.event-actions button {
+  flex: 1;
+  padding: 10px;
+  font-size: 0.85rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.event-actions button.status-btn {
+  background: #f9fafb;
+  font-weight: 500;
+}var(--spacing-xxl) var(--spacing-lg);
+  color: var(--text-tertiary);
+  font-size: 1.1rem;
+  font-weight: 500on.status-btn:hover {
+  background: #e5e7eb;
+}BOTÃO FAB (FLOATING ACTION BUTTON) - APPLE DESIGN ========== */
+.fab-info-button {
+  position: fixed;
+  bottom: var(--spacing-xl);
+  right: var(--spacing-xl);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.fab-info-button:hover {
+  transform: scale(1.08);
+  box-shadow: var(--shadow-xl);
+}
+
+.fab-info-button:active {
+  transform: scale(0.96);
+}
+
+/* Efeito de pulsação sutil */
+@keyframes fabMODAL - DESIGN MINIMALISTA APPLE ========== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: fade-in 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background: var(--bg-primary);
+  border-radius: 16px;
+  padding: var(--spacing-xxl);
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-xl);
+  animation: slide-up 0.3s ease;
+  border: 1px solid var(--border-color);
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: var(--spacing-lg);
+  right: var(--spacing-lg);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: all 0.2s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  transform: scale(1.1);
+}
+
+.modal-content h2 {
+  color: var(--text-primary);
+  margin-top: 0;
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.8rem;
+  font-weight: 600;
+  letter-spacing: -0.02
+
+/* Conteúdo do modal */
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  max-wvar(--spacing-lg);
+}
+
+/* Cada item de alteração no modal */
+.alteracao-item {
+  padding: var(--spacing-lg);
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--accent-blue);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.alteracao-item:hover {
+  background: var(--bg-primary);
+  border-left-color: var(--accent-blue);
+  box-shadow: var(--shadow-sm);
+  transform: translateX(4px);
+}
+
+.alteracao-item h3 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--accent-blue);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.alteracao-item p {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.95rem
+  color: #6b7280;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  color: #111827;
+  transform: scale(1.2);
+}
+
+.modal-content h2 {
+  color: #111827;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+/* Container das alterações no modal */
+.modal-alteracoes {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Cada item de alteração no modal */
+.alteracao-item {
+  padding: 16px;
+  background: #f9fafb;
+  border-left: 4px solid #4f46e5;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.alteracao-item:hover {
+  background: #f3f4f6;
+  transform: translateX(4px);
+}
+
+.alteracao-item h3 {
+  margin: 0 0 8px 0;
+  color: #4f46e5;
+  font-size: 1.1rem;
+}
+
+.alteracao-item p {
+  margin: 0;
+  color: #4b5563;
+  line-height: 1.5;
+}
