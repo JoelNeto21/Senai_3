@@ -26,8 +26,38 @@
     background-color: #18181b !important;
 }
 
-.fi-sidebar .fi-active,
-.fi-sidebar [aria-current='page'] {
-    background-color: #16a34a !important;
-    color: #ffffff !important;
+.fi-sidebar .fi-sidebar-group,
+.fi-sidebar .fi-sidebar-group.fi-active,
+.fi-sidebar .fi-sidebar-group > div,
+.fi-sidebar .fi-sidebar-group > button {
+    background-color: transparent !important;
+}
+
+.fi-sidebar .fi-sidebar-group-label,
+.fi-sidebar .fi-sidebar-group button,
+.fi-sidebar .fi-sidebar-group button * {
+    color: #f8fafc !important;
+}
+
+.fi-sidebar .fi-sidebar-item a[aria-current='page'],
+.fi-sidebar .fi-sidebar-item.fi-active > a,
+.fi-sidebar .fi-sidebar-item.fi-active > button {
+    background-color: #ffffff !important;
+    color: #111827 !important;
+}
+
+.fi-sidebar .fi-sidebar-item a[aria-current='page'] *,
+.fi-sidebar .fi-sidebar-item.fi-active > a *,
+.fi-sidebar .fi-sidebar-item.fi-active > button * {
+    color: #111827 !important;
+}
+
+.fi-sidebar .fi-sidebar-item:not(.fi-active) a,
+.fi-sidebar .fi-sidebar-item:not(.fi-active) button {
+    background-color: transparent !important;
+}
+
+.fi-sidebar .fi-sidebar-item:not(.fi-active) a:hover,
+.fi-sidebar .fi-sidebar-item:not(.fi-active) button:hover {
+    background-color: #18181b !important;
 }
