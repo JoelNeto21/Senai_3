@@ -9,9 +9,15 @@ use App\Filament\Resources\Pedidos\Pages\ViewPedido;
 use App\Filament\Resources\Pedidos\Schemas\PedidoForm;
 use App\Filament\Resources\Pedidos\Schemas\PedidoInfolist;
 use App\Filament\Resources\Pedidos\Tables\PedidosTable;
+use App\Models\Cliente;
 use App\Models\Pedido;
+use App\Models\Produto;
+use App\Rules\MoneyValidation;
+use App\Rules\PositiveMoneyValidation;
+use App\Support\BrazilianFormat;
 use BackedEnum;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -34,12 +40,38 @@ class PedidoResource extends Resource
     protected static ?int $navigationSort = 1;
 
     public static function canAccess(): bool {
+        return auth()->user()?->hasAnyRole(['Admin', 'Cliente']) ?? false;
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->hasAnyRole(['Admin', 'Cliente']) ?? false;
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return auth()->user()?->hasRole('Admin') ?? false;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return auth()->user()?->hasRole('Admin') ?? false;
+    }
+
+    public static function canDeleteAny(): bool
+    {
         return auth()->user()?->hasRole('Admin') ?? false;
     }
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->with(['cliente', 'itens.produto']);
+        $query = parent::getEloquentQuery()->with(['cliente', 'itens.produto']);
+
+        if (auth()->user()?->hasRole('Cliente')) {
+            $query->whereHas('cliente', fn (Builder $query) => $query->where('email', auth()->user()?->email));
+        }
+
+        return $query;
     }
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
@@ -55,6 +87,9 @@ class PedidoResource extends Resource
                 ->relationship('cliente', 'nome')
                 ->preload()
                 ->searchable()
+                ->default(fn () => self::getAuthenticatedClienteId())
+                ->disabled(fn () => auth()->user()?->hasRole('Cliente') ?? false)
+                ->dehydrated()
                 ->required()
                 ->label('Selecione o Cliente')
                 ->validationMessages([
@@ -68,6 +103,8 @@ class PedidoResource extends Resource
                     'Entregue' => 'Entregue',
                 ])
                 ->default('Pendente')
+                ->disabled(fn () => auth()->user()?->hasRole('Cliente') ?? false)
+                ->dehydrated()
                 ->searchable()
                 ->required()
                 ->validationMessages([
@@ -77,6 +114,7 @@ class PedidoResource extends Resource
             TextInput::make('valor_total')
                 ->label('Valor Total do Pedido')
                 ->prefix('R$')
+                ->rules(['required', new MoneyValidation()])
                 ->required()
                 ->readonly() // Geralmente o total é calculado, então deixamos apenas leitura
                 ->mask(RawJs::make(<<<'JS'
@@ -97,6 +135,16 @@ class PedidoResource extends Resource
                         ->validationMessages([
                             'required' => 'Selecione um produto.',
                         ])
+                        ->live()
+                        ->afterStateUpdated(function (mixed $state, Get $get, Set $set): void {
+                            $price = Produto::query()->whereKey($state)->value('valor_unitario');
+
+                            if ($price !== null) {
+                                $set('preco_un', BrazilianFormat::currencyInput($price));
+                            }
+
+                            self::calcularTotal($get, $set);
+                        })
                         ->columnSpan(2),
 
                     TextInput::make('quantidade')
@@ -119,8 +167,13 @@ class PedidoResource extends Resource
                     TextInput::make('preco_un')
                         ->label('Preço Unitário')
                         ->prefix('R$')
+                        ->readonly(fn () => auth()->user()?->hasRole('Cliente') ?? false)
                         ->required()
-                        ->rules(['required'])
+                        ->rules([
+                            'required',
+                            new MoneyValidation(),
+                            new PositiveMoneyValidation(),
+                        ])
                         ->validationMessages([
                             'required' => 'Informe o preço unitário.',
                         ])
@@ -137,6 +190,15 @@ class PedidoResource extends Resource
                 ])
                 ->columnSpanFull()
                 ->label('Produtos do Pedido')
+                ->mutateRelationshipDataBeforeCreateUsing(function (array $data): array {
+                    if (auth()->user()?->hasRole('Cliente')) {
+                        $data['preco_un'] = Produto::query()
+                            ->whereKey($data['produto_id'] ?? null)
+                            ->value('valor_unitario') ?? 0;
+                    }
+
+                    return $data;
+                })
                 ->live(debounce: 300)
                 ->afterStateUpdated(fn (Get $get, Set $set) => self::calcularTotal($get, $set)),
         ]);
@@ -147,24 +209,19 @@ class PedidoResource extends Resource
      */
     protected static function parseCurrency($value): float
     {
-        if ($value === null || $value === '') {
-            return 0.0;
-        }
-
-        if (is_numeric($value)) {
-            return (float) $value;
-        }
-
-        $normalized = str_replace(['R$', ' '], '', (string) $value);
-        $normalized = str_replace('.', '', $normalized);
-        $normalized = str_replace(',', '.', $normalized);
-
-        return (float) $normalized;
+        return BrazilianFormat::decimal($value);
     }
 
     protected static function formatCurrency($value): string
     {
-        return number_format((float) self::parseCurrency($value), 2, ',', '.');
+        return BrazilianFormat::currencyInput($value);
+    }
+
+    protected static function getAuthenticatedClienteId(): ?int
+    {
+        return Cliente::query()
+            ->where('email', auth()->user()?->email)
+            ->value('id');
     }
 
     public static function infolist(Schema $schema): Schema
@@ -193,12 +250,12 @@ class PedidoResource extends Resource
 
                 TextColumn::make('valor_total')
                     ->label('Valor Total')
-                    ->money('BRL')
+                    ->formatStateUsing(fn ($state) => BrazilianFormat::currency($state))
                     ->sortable(),
 
                 TextColumn::make('created_at')
                     ->label('Data do Pedido')
-                    ->datetime('d/m/y H:i')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable(),
             ]);
     }

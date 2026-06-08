@@ -32,14 +32,14 @@ class PermissionResource extends Resource
     protected static ?string $modelLabel = 'Permissão';
     protected static ?string $pluralModelLabel = 'Permissões';
 
-    // public static function canAccess(): bool {
-    //     return auth()->user()?->hasRole('Admin') ?? false;
-    //     // return auth()->user()?->can('Free') ?? false;
-    // }
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('Admin') ?? false;
+    }
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Permissões';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {
@@ -47,14 +47,23 @@ class PermissionResource extends Resource
         return $schema 
         -> schema([
             TextInput::make('name')
-            ->label('Nome da Regra')
+            ->label('Nome da permissao')
             ->required()
-            ->maxLength(50),
+            ->maxLength(50)
+            ->unique(ignoreRecord: true)
+            ->validationMessages([
+                'required' => 'Informe o nome da permissao.',
+                'unique' => 'Esta permissao ja esta cadastrada.',
+            ]),
 
             TextInput::make('guard_name')
-            ->label('Sigla')
+            ->label('Guard')
             ->required()
-            ->maxLength(50),
+            ->default('web')
+            ->maxLength(50)
+            ->validationMessages([
+                'required' => 'Informe o guard.',
+            ]),
         ]);
     }
 
@@ -69,7 +78,7 @@ class PermissionResource extends Resource
         return $table
         -> columns([
             TextColumn::make('name')->label('Nome')->searchable(),
-            TextColumn::make('guard_name')->label('Sigla')->searchable(),
+            TextColumn::make('guard_name')->label('Guard')->searchable(),
         ]);
     }
 

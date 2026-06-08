@@ -16,9 +16,9 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use App\Rules\CpfValidation;
-use App\Rules\CnpjValidation;
+use App\Rules\CpfOrCnpjValidation;
 use App\Rules\PhoneValidation;
+use App\Support\BrazilianFormat;
 
 use UnitEnum;
 use Filament\Forms\Components\TextInput;
@@ -72,19 +72,7 @@ class FornecedorResource extends Resource
                 ->stripCharacters(['.', '-', '/', ' '])
                 ->dehydrateStateUsing(fn ($state) => preg_replace('/\D/', '', $state))
                 ->maxLength(18)
-                ->rules([function (string $attribute, mixed $value, \Closure $fail) {
-                    $digits = preg_replace('/\D/', '', (string) $value);
-                    $len = strlen($digits);
-                    if ($len === 14) {
-                        $rule = new CnpjValidation();
-                        $rule->validate($attribute, $value, $fail);
-                    } elseif ($len === 11) {
-                        $rule = new CpfValidation();
-                        $rule->validate($attribute, $value, $fail);
-                    } else {
-                        $fail('Informe um CPF (11 dígitos) ou CNPJ (14 dígitos) válido.');
-                    }
-                }])
+                ->rules([new CpfOrCnpjValidation()])
                 ->validationMessages([
                     'required' => 'Informe o CNPJ ou CPF.',
                     'unique' => 'Este CNPJ/CPF já está cadastrado.',
@@ -96,6 +84,7 @@ class FornecedorResource extends Resource
                 ->required()
                 ->email()
                 ->label('E-mail')
+                ->maxLength(255)
                 ->rules(['required', 'email:filter'])
                 ->validationMessages([
                     'required' => 'Informe o e-mail.',
@@ -133,9 +122,11 @@ class FornecedorResource extends Resource
         return $table ->
         columns([
             TextColumn::make('nome')->label('Nome/Fantasia')->searchable(),
-            TextColumn::make('cnpj')->label('CNPJ')->searchable(),
+            TextColumn::make('cnpj')->label('CNPJ/CPF')->searchable()
+                ->formatStateUsing(fn ($state) => BrazilianFormat::cpfCnpj($state)),
             TextColumn::make('email')->label('E-mail'),
-            TextColumn::make('telefone'),
+            TextColumn::make('telefone')
+                ->formatStateUsing(fn ($state) => BrazilianFormat::phone($state)),
         ]);
     }
 

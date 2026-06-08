@@ -34,7 +34,7 @@ class MovimentacaoEstoque extends Model
                 return;
             }
 
-            if (in_array($movimentacao->movimentacao, ['Saída', 'Saida'])) {
+            if (in_array($movimentacao->movimentacao, ['Saída', 'Saida', 'SaÃ­da'], true)) {
                 $quantidade = (int) ($movimentacao->quantidade ?? 0);
                 $estoqueDisponivel = (int) $produto->quantidade;
 

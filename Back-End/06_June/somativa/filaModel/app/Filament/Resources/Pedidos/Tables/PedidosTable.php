@@ -13,6 +13,18 @@ class PedidosTable
 {
     public static function configure(Table $table): Table
     {
-        return $table;
+        return $table
+            ->filters([
+                //
+            ])
+            ->recordActions([
+                ViewAction::make(),
+                EditAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 }

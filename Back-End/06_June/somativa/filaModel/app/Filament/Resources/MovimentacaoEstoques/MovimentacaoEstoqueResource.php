@@ -97,7 +97,7 @@ class MovimentacaoEstoqueResource extends Resource
                         return;
                     }
                     
-                    if (in_array($tipo, ['Saída', 'Saida'])) {
+                    if (in_array($tipo, ['Saída', 'Saida', 'SaÃ­da'], true)) {
                         $produto = \App\Models\Produto::find($produtoId);
                         if ($produto && (int) $state > (int) $produto->quantidade) {
                             $error = 'Quantidade solicitada maior que o estoque disponível (estoque atual: ' . $produto->quantidade . ').';
@@ -124,7 +124,7 @@ class MovimentacaoEstoqueResource extends Resource
                     $produtoId = $get('produto_id');
                     $tipo = $get('movimentacao');
                     
-                    if ($produtoId && in_array($tipo, ['Saída', 'Saida'])) {
+                    if ($produtoId && in_array($tipo, ['Saída', 'Saida', 'SaÃ­da'], true)) {
                         $produto = \App\Models\Produto::find($produtoId);
                         if ($produto) {
                             return 'Estoque disponível: ' . $produto->quantidade;
@@ -171,7 +171,7 @@ class MovimentacaoEstoqueResource extends Resource
 
                 TextColumn::make('created_at')
                     ->label('Data da Movimentação')
-                    ->datetime('d/m/y H:i')
+                    ->dateTime('d/m/Y H:i')
                     ->sortable(),
             ]);
     }

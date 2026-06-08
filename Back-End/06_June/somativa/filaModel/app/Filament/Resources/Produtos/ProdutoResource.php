@@ -10,7 +10,11 @@ use App\Filament\Resources\Produtos\Schemas\ProdutoForm;
 use App\Filament\Resources\Produtos\Schemas\ProdutoInfolist;
 use App\Filament\Resources\Produtos\Tables\ProdutosTable;
 use App\Models\Produto;
+use App\Rules\MoneyValidation;
+use App\Rules\PositiveMoneyValidation;
+use App\Support\BrazilianFormat;
 use BackedEnum;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
@@ -31,41 +35,37 @@ class ProdutoResource extends Resource
     protected static ?int $navigationSort = 2;
     
     public static function canAccess(): bool {
+        return auth()->user()?->hasAnyRole(['Admin', 'Cliente']) ?? false;
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()?->hasRole('Admin') ?? false;
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return auth()->user()?->hasRole('Admin') ?? false;
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return auth()->user()?->hasRole('Admin') ?? false;
+    }
+
+    public static function canDeleteAny(): bool
+    {
         return auth()->user()?->hasRole('Admin') ?? false;
     }
 
     protected static function formatCurrency($value): string
     {
-        if ($value === null || $value === '') {
-            return '0,00';
-        }
-
-        if (is_numeric($value)) {
-            return number_format((float) $value, 2, ',', '.');
-        }
-
-        $normalized = str_replace(['R$', ' '], '', (string) $value);
-        $normalized = str_replace('.', '', $normalized);
-        $normalized = str_replace(',', '.', $normalized);
-
-        return number_format((float) $normalized, 2, ',', '.');
+        return BrazilianFormat::currencyInput($value);
     }
 
     protected static function parseCurrency($value): float
     {
-        if ($value === null || $value === '') {
-            return 0.0;
-        }
-
-        if (is_numeric($value)) {
-            return (float) $value;
-        }
-
-        $normalized = str_replace(['R$', ' '], '', (string) $value);
-        $normalized = str_replace('.', '', $normalized);
-        $normalized = str_replace(',', '.', $normalized);
-
-        return (float) $normalized;
+        return BrazilianFormat::decimal($value);
     }
 
     public static function getEloquentQuery(): Builder
@@ -75,7 +75,7 @@ class ProdutoResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Produto';
+    protected static ?string $recordTitleAttribute = 'nome';
 
     public static function form(Schema $schema): Schema
     {
@@ -85,7 +85,11 @@ class ProdutoResource extends Resource
             TextInput::make('nome')
                 ->label('Nome do Produto')
                 ->required()
-                ->validationMessages(['required' => 'Informe o nome do produto.'])
+                ->unique(ignoreRecord: true)
+                ->validationMessages([
+                    'required' => 'Informe o nome do produto.',
+                    'unique' => 'Este produto ja esta cadastrado.',
+                ])
                 ->maxLength(255),
 
             Select::make('categoria')
@@ -107,7 +111,11 @@ class ProdutoResource extends Resource
                 ->label('Preço Unitário')
                 ->prefix('R$')
                 ->required()
-                ->rules(['required'])
+                ->rules([
+                    'required',
+                    new MoneyValidation(),
+                    new PositiveMoneyValidation(),
+                ])
                 ->validationMessages([
                     'required' => 'Informe o preço unitário.',
                 ])
@@ -147,9 +155,18 @@ class ProdutoResource extends Resource
         return $table ->
         columns([
             TextColumn::make('nome')->label('Nome do Produto')->searchable(),
-            TextColumn::make('categoria')->searchable(),
+            TextColumn::make('categoria')
+                ->label('Categoria')
+                ->searchable()
+                ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    'eletronicos' => 'Eletrônicos',
+                    'vestuario' => 'Vestuário',
+                    'alimentos' => 'Alimentos',
+                    default => $state ?? '-',
+                }),
             TextColumn::make('descricao')->label('Descrição'),
-            TextColumn::make('valor_unitario')->label('Preço Unitário')->money('BRL'),
+            TextColumn::make('valor_unitario')->label('Preço Unitário')
+                ->formatStateUsing(fn ($state) => BrazilianFormat::currency($state)),
             TextColumn::make('quantidade')
                 ->label('Quantidade')
                 ->sortable()

@@ -1,8 +1,12 @@
 *.log
+~$*.docx
+~$*.xlsx
+~$*.pptx
 .DS_Store
 .env
 .env.backup
 .env.production
+.env.*.local
 .phpactor.json
 .phpunit.result.cache
 /.fleet
@@ -16,6 +20,8 @@
 /public/build
 /public/hot
 /public/storage
+/storage/app/docx-render
+/storage/app/diagram-*.png
 /storage/*.key
 /storage/pail
 /vendor

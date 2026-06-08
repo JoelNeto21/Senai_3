@@ -2,3 +2,32 @@
 
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
+
+.fi-sidebar,
+.fi-sidebar-header,
+.fi-sidebar-nav {
+    background: #050505 !important;
+}
+
+.fi-sidebar,
+.fi-sidebar *,
+.fi-sidebar-header,
+.fi-sidebar-header * {
+    color: #f8fafc !important;
+}
+
+.fi-sidebar svg,
+.fi-sidebar-header svg {
+    color: #d1d5db !important;
+}
+
+.fi-sidebar a:hover,
+.fi-sidebar button:hover {
+    background-color: #18181b !important;
+}
+
+.fi-sidebar .fi-active,
+.fi-sidebar [aria-current='page'] {
+    background-color: #16a34a !important;
+    color: #ffffff !important;
+}

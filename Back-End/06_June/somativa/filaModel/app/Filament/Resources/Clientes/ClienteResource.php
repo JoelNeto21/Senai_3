@@ -18,6 +18,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use App\Rules\CpfValidation;
 use App\Rules\PhoneValidation;
+use App\Support\BrazilianFormat;
 
 use UnitEnum;
 use Filament\Forms\Components\TextInput;
@@ -75,6 +76,7 @@ class ClienteResource extends Resource
                 ->label('E-mail')
                 ->email()
                 ->required()
+                ->maxLength(255)
                 ->rules(['required', 'email:filter'])
                 ->validationMessages([
                     'required' => 'Informe o e-mail.',
@@ -112,9 +114,11 @@ class ClienteResource extends Resource
         return $table ->
         columns([
             TextColumn::make('nome')->searchable(),
-            TextColumn::make('cpf')->label('CPF')->searchable(),
+            TextColumn::make('cpf')->label('CPF')->searchable()
+                ->formatStateUsing(fn ($state) => BrazilianFormat::cpf($state)),
             TextColumn::make('email')->label('E-mail'),
-            TextColumn::make('telefone'),
+            TextColumn::make('telefone')
+                ->formatStateUsing(fn ($state) => BrazilianFormat::phone($state)),
         ]);
     }
 

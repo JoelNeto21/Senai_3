@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Events\PedidoCriado;
 use App\Listeners\EnviarEmailPedidoRegistrado;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Number;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Carbon::setLocale('pt_BR');
+        Number::useLocale('pt_BR');
+
         Gate::before(function ($user, $ability){
             return $user->hasRole('Admin') ? true : null; // Admin = acesso livre
         });

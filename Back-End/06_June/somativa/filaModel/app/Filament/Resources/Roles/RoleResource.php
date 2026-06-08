@@ -33,14 +33,14 @@ class RoleResource extends Resource
     protected static ?string $modelLabel = 'Cargo';
     protected static ?string $pluralModelLabel = 'Cargos';
 
-    // public static function canAccess(): bool {
-    //     return auth()->user()?->hasRole('Admin') ?? false;
-    //     // return auth()->user()?->can('Free') ?? false;
-    // }
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('Admin') ?? false;
+    }
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Cargos e Funções';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {
@@ -48,14 +48,23 @@ class RoleResource extends Resource
         return $schema 
         -> schema([
             TextInput::make('name')
-            ->label('Nome da Regra')
+            ->label('Nome do cargo')
             ->required()
-            ->maxLength(50),
+            ->maxLength(50)
+            ->unique(ignoreRecord: true)
+            ->validationMessages([
+                'required' => 'Informe o nome do cargo.',
+                'unique' => 'Este cargo ja esta cadastrado.',
+            ]),
 
             TextInput::make('guard_name')
-            ->label('Sigla')
+            ->label('Guard')
             ->required()
-            ->maxLength(50),
+            ->default('web')
+            ->maxLength(50)
+            ->validationMessages([
+                'required' => 'Informe o guard.',
+            ]),
 
             Select::make('permissions') 
             -> label('Permissões de Acesso') 
@@ -77,8 +86,8 @@ class RoleResource extends Resource
         return $table
         -> columns([
             TextColumn::make('name')->label('Nome')->searchable(),
-            TextColumn::make('guard_name')->label('Sigla')->searchable(),
-            TextColumn::make('permissions.name')->label('Permissão')
+            TextColumn::make('guard_name')->label('Guard')->searchable(),
+            TextColumn::make('permissions.name')->label('Permissao')
             ->badge()
             ->sortable()
             ->searchable()

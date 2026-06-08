@@ -10,6 +10,9 @@ use App\Filament\Resources\Insumos\Schemas\InsumoForm;
 use App\Filament\Resources\Insumos\Schemas\InsumoInfolist;
 use App\Filament\Resources\Insumos\Tables\InsumosTable;
 use App\Models\Insumo;
+use App\Rules\MoneyValidation;
+use App\Rules\PositiveMoneyValidation;
+use App\Support\BrazilianFormat;
 use BackedEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Resources\Resource;
@@ -36,46 +39,12 @@ class InsumoResource extends Resource
 
     protected static function formatCurrency($value): string
     {
-        if ($value === null || $value === '') {
-            return '0,00';
-        }
-
-        if (is_numeric($value)) {
-            return number_format((float) $value, 2, ',', '.');
-        }
-
-        // Remove R$ prefix and spaces
-        $normalized = preg_replace('/[R$\s]/', '', (string) $value);
-        // Remove thousands separator
-        $normalized = str_replace('.', '', $normalized);
-        // Replace decimal comma with dot
-        $normalized = str_replace(',', '.', $normalized);
-
-        if (is_numeric($normalized)) {
-            return number_format((float) $normalized, 2, ',', '.');
-        }
-
-        return '0,00';
+        return BrazilianFormat::currencyInput($value);
     }
 
     protected static function parseCurrency($value): float
     {
-        if ($value === null || $value === '') {
-            return 0.0;
-        }
-
-        if (is_numeric($value)) {
-            return (float) $value;
-        }
-
-        // Remove R$ prefix and spaces
-        $normalized = preg_replace('/[R$\s]/', '', (string) $value);
-        // Remove thousands separator
-        $normalized = str_replace('.', '', $normalized);
-        // Replace decimal comma with dot
-        $normalized = str_replace(',', '.', $normalized);
-
-        return (float) $normalized;
+        return BrazilianFormat::decimal($value);
     }
 
     public static function getEloquentQuery(): Builder
@@ -85,7 +54,7 @@ class InsumoResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Insumo';
+    protected static ?string $recordTitleAttribute = 'nome';
 
     public static function form(Schema $schema): Schema
     {
@@ -95,7 +64,12 @@ class InsumoResource extends Resource
             TextInput::make('nome')
                 ->label('Nome do Insumo')
                 ->required()
-                ->validationMessages(['required' => 'Informe o nome do insumo.']),
+                ->maxLength(255)
+                ->unique(ignoreRecord: true)
+                ->validationMessages([
+                    'required' => 'Informe o nome do insumo.',
+                    'unique' => 'Este insumo ja esta cadastrado.',
+                ]),
 
             Select::make('unidade_medida')
                 ->label('Un. de Medida')
@@ -113,7 +87,11 @@ class InsumoResource extends Resource
                 ->label('Preço de Custo')
                 ->prefix('R$')
                 ->required()
-                ->rules(['required'])
+                ->rules([
+                    'required',
+                    new MoneyValidation(),
+                    new PositiveMoneyValidation(),
+                ])
                 ->validationMessages([
                     'required' => 'Informe o preço de custo.',
                 ])
@@ -153,8 +131,18 @@ class InsumoResource extends Resource
         return $table ->
         columns([
             TextColumn::make('nome')->label('Nome do Insumo')->searchable(),
-            TextColumn::make('unidade_medida')->label('Un. de Medida')->searchable(),
-            TextColumn::make('preco_custo')->label('Preço/Custo')->money('BRL'),
+            TextColumn::make('unidade_medida')
+                ->label('Un. de Medida')
+                ->searchable()
+                ->formatStateUsing(fn (?string $state): string => match ($state) {
+                    'unidade' => 'un',
+                    'metro' => 'm',
+                    'centimetro' => 'cm',
+                    'milimetro' => 'mm',
+                    default => $state ?? '-',
+                }),
+            TextColumn::make('preco_custo')->label('Preço/Custo')
+                ->formatStateUsing(fn ($state) => BrazilianFormat::currency($state)),
             TextColumn::make('estoque')->searchable(),
         ]);
     }

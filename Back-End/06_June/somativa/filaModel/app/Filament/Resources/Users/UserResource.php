@@ -24,6 +24,11 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->hasRole('Admin') ?? false;
+    }
+
     protected static string|UnitEnum|null $navigationGroup = 'Admin';
     protected static ?int $navigationSort = 3;
 
@@ -33,7 +38,7 @@ class UserResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'User';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {
@@ -46,7 +51,7 @@ class UserResource extends Resource
             ->maxLength(50),
 
             TextInput::make('email')
-            ->label('Email')
+            ->label('E-mail')
             ->required()
             ->email()
             ->rules(['required', 'email:filter'])
@@ -79,7 +84,7 @@ class UserResource extends Resource
             -> columnSpanFull(), 
 
             Select::make('roles') 
-            -> label('Role/Cargo') 
+            -> label('Cargo')
             -> multiple() 
             -> relationship('roles', 'name') 
             -> preload() 
@@ -98,8 +103,8 @@ class UserResource extends Resource
         return $table
         -> columns([
             TextColumn::make('name')->label('Nome')->searchable(),
-            TextColumn::make('email')->label('Email')->searchable(),
-            TextColumn::make('roles.name')->label('Role')
+            TextColumn::make('email')->label('E-mail')->searchable(),
+            TextColumn::make('roles.name')->label('Cargo')
             ->badge()
             ->sortable()
             ->searchable()
